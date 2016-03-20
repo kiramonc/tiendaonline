@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="${request.locale_name}">
+<head>
+    <!--<meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>-->
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href="${request.static_url('myapp:static/img/pyramid-16x16.png')}">
+    <title>Aplicación TiendaOnline</title>
+    <!-- Bootstrap core CSS -->
+    <link href="//oss.maxcdn.com/libs/twitter-bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles for this scaffold -->
+    <link href="${request.static_url('myapp:static/css/theme.css')}" rel="stylesheet">
+    <link href="${request.static_url('myapp:static/css/style.css')}" rel="stylesheet">
+    <link href="${request.static_url('myapp:static/css/angular_validation.css')}" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="//oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<div class="wrapper">
+    <div class="container">
+        <div class="row">
+            <div id="header-page">
+                <div class="col-md-1 "><center>
+                    <img class="logo img-responsive" src="${request.static_url('myapp:static/img/pyramid.png')}" alt="pyramid web framework">
+                </center>
+                </div>
+                <div class="col-md-11 ">
+                    <ul class="nav nav-tabs nav-justified menu-principal">
+                        <li role="presentation" ><a class="menu-item" href="/client">Home</a></li>
+                        <li role="presentation"><a class="menu-item" href="/products">Productos</a></li>
+                        <li role="presentation"><a class="menu-item" href="/pedidos">Pedidos</a></li>
+                        <li role="presentation">
+                            <a class="menu-login" href="/my-account"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Cuenta</a>
+                        </li>
+                        <li tal:condition="logged_in" role="presentation" >
+                            <a class="menu-item"  href="/logout"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Log-out</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-md-12" id="main">
+                <div class="content">
+                    <div class="well titulos" >
+                        <center><h2><span class="font-semi-bold">Carrito</span></h2></center>
+
+                        <table class="table table-bordered table-hover">
+                            <thead class="encabezado-tabla"><tr>
+                                <th><center>Nombre</center></th>
+                                <th><center>Descripción</center></th>
+                                <th><center>Unidades</center></th>
+                                <th><center>Quitar</center></th>
+                            </tr></thead>
+                            <tbody><tal:block repeat="item formData">
+                                <tr class="fila-tabla">
+                                    <td>${item.nombre}</td>
+                                    <td>${item.descripcion}</td>
+                                    <td><input type="number" class="form-control" name="unidades" value="${item.unidades}"/>
+                                        ${item.inventario}</td>
+
+                                    <td>
+                                        <center><a class="btn btn-danger" role="button" onclick="">
+                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                                        </center></td>
+                                </tr>
+                            </tal:block></tbody>
+                        </table>
+                        <a class="btn btn-success" role="button" name="form.confirmPedido">Hacer pedido</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="//oss.maxcdn.com/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="//oss.maxcdn.com/libs/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
+</body>
+</html>

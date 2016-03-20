@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="${request.locale_name}">
+<head>
+    <!--<meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>-->
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href="${request.static_url('myapp:static/img/pyramid-16x16.png')}">
+    <title>Aplicación TiendaOnline</title>
+    <!-- Bootstrap core CSS -->
+    <link href="//oss.maxcdn.com/libs/twitter-bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this scaffold -->
+    <link href="${request.static_url('myapp:static/css/theme.css')}" rel="stylesheet">
+    <link href="${request.static_url('myapp:static/css/style.css')}" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="//oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<div class="wrapper">
+    <div class="container">
+        <div class="row">
+            <div id="header-page">
+                <div class="col-md-1 "><center>
+                    <img class="logo img-responsive" src="${request.static_url('myapp:static/img/pyramid.png')}" alt="pyramid web framework">
+                </center>
+                </div>
+                <div class="col-md-11 ">
+                    <ul class="nav nav-tabs nav-justified menu-principal">
+                        <li role="presentation" ><a class="menu-item" href="/admin">Home</a></li>
+                        <li role="presentation"><a class="menu-item" href="/user">Usuario</a></li>
+                        <li role="presentation"><a class="menu-item" href="/product">Productos</a></li>
+                        <li role="presentation"><a class="menu-item" href="/admin-pedidos">Pedidos</a></li>
+                        <li tal:condition="logged_in" role="presentation" >
+                            <a class="menu-item"  href="${request.application_url}/logout"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Log-out</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-md-12" id="main">
+                <div class="content">
+                    <h2><span class="font-semi-bold texto-capitalizado">${producto.nombre}</span></h2>
+                    <hr/>
+                    <div class="imagen-producto">
+                        <center>
+                            <img src="${request.static_url('myapp:static/img/lampara.jpg')}" class="img-responsive" alt="Responsive image">
+                        </center>
+                    </div>
+
+                    <div class="datos-producto">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <label class="col-sm-4 col-md-4 control-label"> Precio: <br/></label>
+                            <div class="col-sm-8 col-md-8">
+                                <p class="form-control-static">13 dólares</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 col-md-4 control-label"> Descripción: <br/></label>
+                            <div class="col-sm-8 col-md-8">
+                                <p id="inputDescripcion">${producto.descripcion}</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 col-md-4 control-label"> En Stock: <br/></label>
+                            <div class="col-sm-8 col-md-8">
+                                <p class="form-control-static">${producto.inventario}</p>
+                            </div>
+                        </div>
+                        <br/>
+                        <a href="/product/${producto.nombre}/edit" class="btn btn-success" role="button">Editar</a>
+                        <a href="/" class="btn btn-default" role="button">Home</a>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="//oss.maxcdn.com/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="//oss.maxcdn.com/libs/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
+</body>
+</html>
