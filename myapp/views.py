@@ -2,6 +2,7 @@
 import os
 import uuid
 import shutil
+import json
 from pyramid.response import Response
 from pyramid.view import view_config
 from pyramid.httpexceptions import HTTPFound
@@ -276,6 +277,16 @@ def pedidos(request):
 def carrito(request):
     inicio = request.route_url('carrito')
     return dict(inicio=inicio, logged_in=request.authenticated_userid)
+
+
+@view_config(route_name='generate_ajax_data', renderer="json")
+def my_ajax_view(request):
+    print "Hello response"
+    nombres= request.POST['nombres'].split(",")
+    unidades= request.POST['unidades'].split(",")
+    print nombres[0] + ": " + unidades[0]
+    print len(nombres)
+    return {"message": "Pedido realizado con éxito"}
 
 
 @view_config(route_name='admin_pedidos', renderer='templates/admin/pedidos.pt', permission='edit')

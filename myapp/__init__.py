@@ -52,6 +52,7 @@ def main(global_config, **settings):
     config.add_route('list_prod', '/productos')        # para ver el listado de productos
     config.add_route('ver_prod', '/productos/{uid}')  # para ver el detalle de un producto
 
+    config.add_route('generate_ajax_data', '/ajax_view')
 
     config.scan()
     return config.make_wsgi_app()
