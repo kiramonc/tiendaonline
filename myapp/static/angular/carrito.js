@@ -73,8 +73,8 @@ angular
                 deferred.resolve(res);
                 console.log("Exitoso: "+ res.message);
 
-//                window.location="/pedidos";
-                setTimeout("location.href='/pedidos'", 1000);
+                window.location="/pedidos";
+                //setTimeout("location.href='/pedidos'", 1000);
             })
             .error(function(msg, code){
                 deferred.reject(msg);

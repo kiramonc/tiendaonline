@@ -55,7 +55,7 @@
                                 <th><center>Stock</center></th>
                                 <th><center>Agregar a carrito</center></th>
                             </tr></thead>
-                            <tbody><tal:block repeat="item formData">
+                            <tbody class="texto-centrado"><tal:block repeat="item formData">
                                 <tr class="fila-tabla" >
                                     <td onclick="location='/products/${item.nombre}'">${item.nombre}</td>
                                     <td onclick="location='/products/${item.nombre}'">${item.descripcion}</td>

@@ -2,12 +2,11 @@
 import os
 import uuid
 import shutil
-import json
 from pyramid.response import Response
 from pyramid.view import view_config
 from pyramid.httpexceptions import HTTPFound
 from sqlalchemy.exc import DBAPIError
-from pyramid.renderers import render_to_response
+
 from pyramid.view import (
     view_config,
     forbidden_view_config,
@@ -16,7 +15,7 @@ from pyramid.security import (
     remember,
     forget,
     )
-
+from datetime import datetime
 from .models import (
     DBSession,
     Producto,  # el nombre de la clase en modelo
@@ -44,6 +43,24 @@ def home(request):
         else:
             inicio = request.route_url('home-client')
             print "CLiente logueado"
+            return dict(inicio=inicio, logged_in=request.authenticated_userid)
+
+
+@view_config(route_name='pag-error', renderer='templates/error.pt', permission='show')
+@view_config(route_name='error-client', renderer='templates/client/error.pt', permission='show')
+@view_config(route_name='error-admin', renderer='templates/admin/error.pt', permission='edit')
+def error(request):
+    username = request.authenticated_userid
+    if username is None:
+        inicio = request.route_url('pag-error')
+        return dict(inicio=inicio, logged_in=request.authenticated_userid)
+    else:
+        user = DBSession.query(Usuario).filter_by(username=username).one()
+        if user.rol == 'admins':
+            inicio = request.route_url('error-admin')
+            return dict(inicio=inicio, logged_in=request.authenticated_userid)
+        else:
+            inicio = request.route_url('error-client')
             return dict(inicio=inicio, logged_in=request.authenticated_userid)
 
 
@@ -269,8 +286,26 @@ def desactivar(request):
 
 @view_config(route_name='pedidos', renderer='templates/client/pedidos.pt', permission='show')
 def pedidos(request):
-    inicio = request.route_url('pedidos')
-    return dict(inicio=inicio, logged_in=request.authenticated_userid)
+    username = request.authenticated_userid
+    user = DBSession.query(Usuario).filter_by(username=username).one()
+    data = DBSession.query(Pedido).filter_by(cliente_id=user.id).all()
+    return dict(formData=data, logged_in=request.authenticated_userid)
+
+
+@view_config(route_name='detalle_pedido', renderer='templates/client/detalle_pedido.pt', permission='show')
+def detalle_pedido(request):
+    username = request.authenticated_userid
+    if username is not None:
+        user = DBSession.query(Usuario).filter_by(username=request.authenticated_userid).one()
+        uid = request.matchdict['uid']
+        pedido = DBSession.query(Pedido).filter_by(id=uid).one()
+        if pedido.cliente_id == user.id:
+            data = DBSession.query(Prod_Pedido).filter_by(pedido_id=pedido.id).all()
+            return dict(formData=data, pedido=pedido, logged_in=request.authenticated_userid, uid=uid)
+        else:
+            return HTTPFound(request.route_url('error-client'))
+    else:
+        return HTTPFound(request.route_url('pag-error'))
 
 
 @view_config(route_name='carrito', renderer='templates/client/chart.pt', permission='show')
@@ -279,14 +314,39 @@ def carrito(request):
     return dict(inicio=inicio, logged_in=request.authenticated_userid)
 
 
+@view_config(route_name='get_data', renderer="json")
+def get_data(request):
+    uid = request.matchdict['uid']
+    pedido = DBSession.query(Pedido).filter_by(id=uid).one()
+    data = DBSession.query(Prod_Pedido).filter_by(pedido_id=pedido.id).all()
+    productos = []
+    fecha = pedido.fecha.strftime("%d-%m-%Y %H:%M")
+    for prod in data:
+        productos.append({"nombre":prod.producto.nombre, "unidades":prod.unidades, "precio":prod.producto.precio})
+    return {"productos": productos, "fecha": fecha, "uid": uid}
+
+
 @view_config(route_name='generate_ajax_data', renderer="json")
 def my_ajax_view(request):
     print "Hello response"
     nombres= request.POST['nombres'].split(",")
     unidades= request.POST['unidades'].split(",")
-    print nombres[0] + ": " + unidades[0]
-    print len(nombres)
-    return {"message": "Pedido realizado con éxito"}
+    # print nombres[0] + ": " + unidades[0]
+    client = DBSession.query(Usuario).filter_by(username=request.authenticated_userid).one()
+    print "Usuario: " + client.username
+
+    dt = datetime.now()
+    pedido = Pedido(client.id, dt, "En espera")
+    print "Fecha y hora: " + pedido.fecha.strftime("%d-%m-%Y %H:%M")
+    DBSession.add(pedido)
+    pedido = DBSession.query(Pedido).filter_by(cliente_id=client.id, fecha=dt).one()
+    cont=0
+    for nombre in nombres:
+        producto = DBSession.query(Producto).filter_by(nombre=nombre).one()
+        prod_pedido = Prod_Pedido(pedido.id, producto.id, unidades[cont])
+        DBSession.add(prod_pedido)
+        cont=cont+1
+    return dict(message="Pedido realizado con éxito", logged_in=request.authenticated_userid)
 
 
 @view_config(route_name='admin_pedidos', renderer='templates/admin/pedidos.pt', permission='edit')

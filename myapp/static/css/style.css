@@ -71,6 +71,10 @@ ul.nav.nav-tabs.nav-justified.menu-principal {
     text-transform: capitalize;
 }
 
+.texto-centrado{
+    text-align: center;
+}
+
 .imagen-producto{
     width: 40%;
     float: left;

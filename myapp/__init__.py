@@ -26,6 +26,9 @@ def main(global_config, **settings):
     config.include('pyramid_chameleon')
     config.add_static_view('static', 'static', cache_max_age=3600)
     # add_route es el "nombre_de_la_vista", "url"
+    config.add_route('pag-error', '/error')   # para el inicio de la app
+    config.add_route('error-admin', '/error-admin')   # para el inicio de la app
+    config.add_route('error-client', '/error-client')   # para el inicio de la app
     config.add_route('home', '/')   # para el inicio de la app
     config.add_route('home-admin', '/admin')   # para el inicio de la app
     config.add_route('home-client', '/client')   # para el inicio de la app
@@ -45,6 +48,7 @@ def main(global_config, **settings):
     config.add_route('productos', '/products')        # para ver el listado de productos
     config.add_route('ver', '/products/{uid}')  # para ver el detalle de un producto
     config.add_route('pedidos', '/pedidos')        # para ver el listado de productos
+    config.add_route('detalle_pedido', '/pedidos/{uid}/detalle')        # para ver el listado de productos
     config.add_route('admin_pedidos', '/admin-pedidos')        # para ver el listado de productos
     config.add_route('cuenta', '/my-account')        # para ver el listado de productos
     config.add_route('desactivar', '/desc-account')   # para ver el listado de productos
@@ -53,6 +57,7 @@ def main(global_config, **settings):
     config.add_route('ver_prod', '/productos/{uid}')  # para ver el detalle de un producto
 
     config.add_route('generate_ajax_data', '/ajax_view')
+    config.add_route('get_data', '/pedido_data/{uid}')
 
     config.scan()
     return config.make_wsgi_app()

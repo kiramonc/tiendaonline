@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="${request.locale_name}" >
+<head>
+    <!--<meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>-->
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href="${request.static_url('myapp:static/img/pyramid-16x16.png')}">
+    <title>Aplicación TiendaOnline</title>
+    <!-- Bootstrap core CSS -->
+    <link href="//oss.maxcdn.com/libs/twitter-bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this scaffold -->
+    <link href="${request.static_url('myapp:static/css/theme.css')}" rel="stylesheet">
+      <link href="${request.static_url('myapp:static/css/style.css')}" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="//oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<div class="wrapper">
+    <div class="container">
+        <div class="row">
+            <div id="header-page">
+                <div class="col-md-1 "><center>
+                    <img class="logo img-responsive" src="${request.static_url('myapp:static/img/pyramid.png')}" alt="pyramid web framework">
+                </center>
+                </div>
+                <div class="col-md-11 ">
+                    <ul class="nav nav-tabs nav-justified menu-principal">
+                        <li role="presentation" ><a class="menu-item" href="/">Home</a></li>
+                        <li role="presentation"><a class="menu-item" href="/productos">Productos</a></li>
+                        <li role="presentation">
+                            <a class="menu-login" href="/login"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Login</a>
+                        </li>
+                        <li role="presentation">
+                            <a class="menu-item" href="/register"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Register</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-md-12" id="main">
+                <div class="content">
+                    <center>
+                        <span><b/></span>
+                        <h2><span class="font-semi-bold">ha ocurrido un error</span> </h2>
+
+                    </center>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+
+    <script src="//oss.maxcdn.com/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="//oss.maxcdn.com/libs/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
+</body>
+</html>
