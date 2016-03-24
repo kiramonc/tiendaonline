@@ -1,3 +1,11 @@
+function efecto(){
+    var carritoB = document.getElementById("carritoButton");
+    $("#carritoButton").addClass("tada");
+    carritoB.addEventListener("animationend", function(){
+        $("#carritoButton").removeClass("tada");
+    }, false);
+}
+
 angular
     .module("adminCarrito", ['LocalStorageModule'])
     .config(['localStorageServiceProvider', function(localStorageServiceProvider){
@@ -12,23 +20,18 @@ angular
         }
 
         $scope.agregar = function (data, precio, stock) {
-            console.log(data);
             $scope.productos.push({"nombre": data, "precio": precio, "stock": stock, "unidad": 1});
-            console.log($scope.productos);
             localStorageService.set("ls.productos", $scope.productos);
+            efecto();
         };
 
         $scope.eliminar = function (indice) {
-            console.log(indice);
             $scope.productos.splice(indice, 1)
-            console.log($scope.productos);
             localStorageService.set("ls.productos", $scope.productos);
         };
 
         $scope.editar = function (indice) {
-            console.log($scope.productos[indice]);
             localStorageService.set("ls.productos", $scope.productos);
-
         };
 
         $scope.enviar = function (data) {
@@ -41,10 +44,9 @@ angular
 
         $scope.redireccionar = function(data){
             var url = "/products/"+$scope.productos[data]["nombre"]
-            console.log(data)
-            console.log(url)
             window.location=url;
         }
+
     })
     .service('save', ["$http", "$q", function($http, $q){
         this.doPedido = function(arrayProd){
@@ -71,8 +73,6 @@ angular
             })
             .success(function (res){
                 deferred.resolve(res);
-                console.log("Exitoso: "+ res.message);
-
                 window.location="/pedidos";
                 //setTimeout("location.href='/pedidos'", 1000);
             })

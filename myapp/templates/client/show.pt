@@ -45,15 +45,18 @@
             <div class="col-md-12" id="main">
                 <div class="content">
                     <form id="formProd" class="form-horizontal" role="form" ng-controller="carritoCtrl">
-                        <a href="/chart" class="btn btn-success pull-right" role="button">Ver carrito</a>
-                        <h2><p class="font-semi-bold texto-capitalizado">${producto.nombre}</p></h2>
-                        <hr/>
+                        <a id="carritoButton" href="/chart" class="btn btn-success pull-right" role="button">
+                            <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>Ver carrito
+                            <span  class="badge">{{productos.length}}</span>
+                        </a>
                         <div class="imagen-producto">
                             <center>
                                 <img src="${request.application_url}/static/img/productos/${producto.img}"  class="img-responsive">
                             </center>
                         </div>
                         <div class="datos-producto">
+                            <h2 class="texto-centrado"><p class="font-semi-bold texto-capitalizado">${producto.nombre}</p></h2>
+                            <hr/>
                             <div class="form-group">
                                 <label class="col-sm-4 col-md-4 control-label"> Precio: <br/></label>
                                 <div class="col-sm-8 col-md-8">
@@ -73,9 +76,9 @@
                                 </div>
                             </div>
                             <br/>
-                            <a class="btn btn-success" role="button" ng-click="agregar('${producto.nombre}','${producto.precio}','${producto.inventario}')">
-                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>Agregar a carrito
-                            </a>
+                            <center><a class="btn btn-success" role="button" ng-click="agregar('${producto.nombre}','${producto.precio}','${producto.inventario}')">
+                                <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>Agregar
+                            </a></center>
                         </div>
                     </form>
                 </div>

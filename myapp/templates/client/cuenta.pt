@@ -45,7 +45,7 @@
             <div class="col-md-12" id="main">
             <div class="content">
                 <div class="well titulos">
-                    <h2><span class="font-semi-bold"> ${user.nombre}</span></h2>
+                    <h2><span class="font-semi-bold"> Mi cuenta</span></h2>
                     <form class="form-horizontal" role="form" action="${save_form}" method="post">
                         <div class="form-group">
                             <label for="inputNombre" class="col-sm-2 control-label"> Nombre: <br/></label>

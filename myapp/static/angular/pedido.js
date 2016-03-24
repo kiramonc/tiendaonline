@@ -4,10 +4,12 @@ angular
         var scope = this;
         scope.productos = [];
         scope.fecha = "";
+        scope.cliente = {};
         scope.url = "/pedido_data/"+document.getElementById("url").value;
         $http.get(scope.url).then(function (response) {
             scope.productos = response.data.productos;
             scope.fecha = response.data.fecha;
+            scope.cliente = response.data.cliente;
         });
 
         scope.getTotal = function(){

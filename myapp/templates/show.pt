@@ -43,44 +43,46 @@
 
             <div class="col-md-12" id="main">
                 <div class="content">
-                    <h2><span class="font-semi-bold texto-capitalizado">${producto.nombre}</span></h2>
-                    <hr/>
-                    <div class="imagen-producto">
-                        <center>
-                            <img src="${request.static_url('myapp:static/img/lampara.jpg')}" class="img-responsive" alt="Responsive image">
-                        </center>
-                    </div>
-
-                    <div class="datos-producto">
-                    <form class="form-horizontal" role="form">
-                        <div class="form-group">
-                            <label class="col-sm-4 col-md-4 control-label"> Precio: <br/></label>
-                            <div class="col-sm-8 col-md-8">
-                                <p class="form-control-static">13 dólares</p>
-                            </div>
+                    <form id="formProd" class="form-horizontal" role="form" >
+                        <div class="imagen-producto">
+                            <center>
+                                <img src="${request.application_url}/static/img/productos/${producto.img}"  class="img-responsive">
+                            </center>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 col-md-4 control-label"> Descripción: <br/></label>
-                            <div class="col-sm-8 col-md-8">
-                                <p id="inputDescripcion">${producto.descripcion}</p>
+                        <div class="datos-producto">
+                            <center><h2><p class="font-semi-bold texto-capitalizado">${producto.nombre}</p></h2></center>
+                            <hr/>
+                            <div class="form-group">
+                                <label class="col-sm-4 col-md-4 control-label"> Precio: <br/></label>
+                                <div class="col-sm-8 col-md-8">
+                                    <p class="form-control-static">$ ${producto.precio}</p>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 col-md-4 control-label"> En Stock: <br/></label>
-                            <div class="col-sm-8 col-md-8">
-                                <p class="form-control-static">${producto.inventario}</p>
+                            <div class="form-group">
+                                <label class="col-sm-4 col-md-4 control-label"> Descripción: <br/></label>
+                                <div class="col-sm-8 col-md-8">
+                                    <p id="inputDescripcion">${producto.descripcion}</p>
+                                </div>
                             </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 col-md-4 control-label"> En Stock: <br/></label>
+                                <div class="col-sm-8 col-md-8">
+                                    <p class="form-control-static">${producto.inventario}</p>
+                                </div>
+                            </div>
+                            <br/>
+                            <center><a class="btn btn-success" role="button" href="/login">
+                                <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>Agregar a carrito
+                            </a></center>
                         </div>
-                        <br/>
-                        <a class="btn btn-success" role="button" onclick="prodCtrl.agregar()">
-                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Agregar a carrito</a>
                     </form>
-                    </div>
+
                 </div>
             </div>
         </div>
     </div>
 </div>
+
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->

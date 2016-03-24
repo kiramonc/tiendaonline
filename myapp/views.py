@@ -308,6 +308,14 @@ def detalle_pedido(request):
         return HTTPFound(request.route_url('pag-error'))
 
 
+@view_config(route_name='detalle_pedido_admin', renderer='templates/admin/detalle_pedido.pt', permission='edit')
+def detalle_pedido_admin(request):
+    uid = request.matchdict['uid']
+    pedido = DBSession.query(Pedido).filter_by(id=uid).one()
+    data = DBSession.query(Prod_Pedido).filter_by(pedido_id=pedido.id).all()
+    return dict(formData=data, pedido=pedido, logged_in=request.authenticated_userid, uid=uid)
+
+
 @view_config(route_name='carrito', renderer='templates/client/chart.pt', permission='show')
 def carrito(request):
     inicio = request.route_url('carrito')
@@ -318,12 +326,15 @@ def carrito(request):
 def get_data(request):
     uid = request.matchdict['uid']
     pedido = DBSession.query(Pedido).filter_by(id=uid).one()
+    cliente = {"nombre":pedido.cliente.nombre, "apellido":pedido.cliente.apellido, "username":pedido.cliente.username}
+    print "CLIENTE"
+    print cliente
     data = DBSession.query(Prod_Pedido).filter_by(pedido_id=pedido.id).all()
     productos = []
     fecha = pedido.fecha.strftime("%d-%m-%Y %H:%M")
     for prod in data:
         productos.append({"nombre":prod.producto.nombre, "unidades":prod.unidades, "precio":prod.producto.precio})
-    return {"productos": productos, "fecha": fecha, "uid": uid}
+    return {"productos": productos, "fecha": fecha, "uid": uid, "cliente": cliente}
 
 
 @view_config(route_name='generate_ajax_data', renderer="json")
@@ -351,8 +362,8 @@ def my_ajax_view(request):
 
 @view_config(route_name='admin_pedidos', renderer='templates/admin/pedidos.pt', permission='edit')
 def admin_pedidos(request):
-    inicio = request.route_url('admin_pedidos')
-    return dict(inicio=inicio, logged_in=request.authenticated_userid)
+    data = DBSession.query(Pedido).all()
+    return dict(formData=data, logged_in=request.authenticated_userid)
 
 
 @view_config(route_name='login', renderer='templates/login.pt')

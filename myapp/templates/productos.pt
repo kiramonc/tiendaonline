@@ -43,29 +43,34 @@
 
             <div class="col-md-12" id="main">
                 <div class="content">
-                    <div class="well titulos" ng-controller="productoCtrl as prodCtrl" >
-                        <center><h2><span class="font-semi-bold">Lista de productos</span></h2></center>
+                    <div class="titulos" ng-controller="productoCtrl as prodCtrl" >
+                        <h2 class="texto-centrado"><span class="font-semi-bold">Lista de productos</span></h2>
 
-                        <table class="table table-bordered table-hover">
-                            <thead class="encabezado-tabla"><tr>
-                                <th><center>Nombre</center></th>
-                                <th><center>Descripción</center></th>
-                                <th><center>Stock</center></th>
-                                <th><center>Add to chart</center></th>
-                            </tr></thead>
-                            <tbody><tal:block repeat="item formData">
-                                <tr class="fila-tabla" onclick="location='/productos/${item.nombre}'">
-                                    <td>${item.nombre}</td>
-                                    <td>${item.descripcion}</td>
-                                    <td>${item.inventario}</td>
-                                    <td>
-                                        <center><a class="btn btn-success" role="button" onclick="prodCtrl.agregar()">
-                                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                        <div class="row">
+                            <tal:block repeat="item formData">
+                                <div class="col-md-3 col-xs-6">
+                                    <div class="thumbnail thumbnail-size">
+                                        <center>
+                                            <img onclick="location='/productos/${item.nombre}'" src="${request.application_url}/static/img/productos/${item.img}" class="img-responsive imagen-thumbnail fila-tabla img-rounded" height="200px" >
                                         </center>
-                                    </td>
-                                </tr>
-                            </tal:block></tbody>
-                        </table>
+                                        <div class="caption">
+                                            <center>
+                                                <h4 class="titulos texto-capitalizado texto-negrita">${item.nombre}</h4>
+                                                <p>Precio: <span class="glyphicon glyphicon-usd" aria-hidden="true"></span> ${item.precio}</p>
+                                            </center>
+                                        </div>
+                                    </div>
+                                    <center>
+                                        <a class="btn btn-success" role="button" href="/productos/${item.nombre}">
+                                            <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>Ver
+                                        </a>
+                                        <a class="btn btn-success" role="button" href="/login">
+                                            <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>Agregar
+                                        </a>
+                                    </center>
+                                </div>
+                            </tal:block>
+                        </div>
                     </div>
                 </div>
             </div>

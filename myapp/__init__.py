@@ -50,6 +50,7 @@ def main(global_config, **settings):
     config.add_route('pedidos', '/pedidos')        # para ver el listado de productos
     config.add_route('detalle_pedido', '/pedidos/{uid}/detalle')        # para ver el listado de productos
     config.add_route('admin_pedidos', '/admin-pedidos')        # para ver el listado de productos
+    config.add_route('detalle_pedido_admin', '/pedidos/{uid}/admin')        # para ver el listado de productos
     config.add_route('cuenta', '/my-account')        # para ver el listado de productos
     config.add_route('desactivar', '/desc-account')   # para ver el listado de productos
     config.add_route('carrito', '/chart')        # para ver el listado de productos

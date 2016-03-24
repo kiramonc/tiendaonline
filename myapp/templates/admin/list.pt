@@ -55,26 +55,28 @@
                                 <th><center>Nombre</center></th>
                                 <th><center>Precio</center></th>
                                 <th><center>Stock</center></th>
-                                <th><center>Editar</center></th>
-                                <th><center>Eliminar</center></th>
+                                <th width="25%"></th>
                             </tr></thead>
                             <tbody><tal:block repeat="item formData">
                                 <tr class="fila-tabla" onclick="location='/product/${item.nombre}'">
                                     <td>${item.nombre}</td>
-                                    <td>${item.precio}</td>
+                                    <td><span class="glyphicon glyphicon-usd" aria-hidden="true"></span> ${item.precio}</td>
                                     <td>${item.inventario}</td>
                                     <td>
-                                        <center><a href="/product/${item.nombre}/edit" class="btn btn-success" role="button">
-                                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
-                                        </center></td>
-                                    <td>
-                                        <center><a href="/product/${item.nombre}/delete" class="btn btn-danger" role="button">
-                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
-                                        </center></td>
+                                        <div class="col-md-6 col-xs-12">
+                                            <a href="/product/${item.nombre}/edit" class="btn btn-success" role="button" style="width: 100%;">
+                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Editar
+                                            </a>
+                                        </div>
+                                        <div class="col-md-6 col-xs-12">
+                                            <a href="/product/${item.nombre}/delete" class="btn btn-danger" role="button" style="width: 100%;">
+                                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Eliminar
+                                            </a>
+                                        </div>
+                                    </td>
                                 </tr>
                             </tal:block></tbody>
                         </table>
-                        <a href="/" class="btn btn-success" role="button">Home</a>
                     </div>
                 </div>
             </div>

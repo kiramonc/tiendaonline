@@ -66,6 +66,7 @@ class Pedido(Base):
     fecha = Column(DateTime)
     estado = Column(String(255))
     productos = relationship("Prod_Pedido")
+    cliente = relationship("Usuario")
 
     def __init__(self, cliente_id, fecha, estado):
         self.cliente_id = cliente_id
