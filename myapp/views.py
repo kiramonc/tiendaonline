@@ -25,13 +25,12 @@ from .models import (
     )
 
 
-@view_config(route_name='home', renderer='templates/home.pt', permission='show')
 @view_config(route_name='home-client', renderer='templates/client/home.pt', permission='show')
 @view_config(route_name='home-admin', renderer='templates/admin/home.pt', permission='edit')
 def home(request):
     username = request.authenticated_userid
     if username is None:
-        inicio = request.route_url('home')
+        inicio = request.route_url('login')
         print "No logueado"
         return dict(inicio=inicio, logged_in=request.authenticated_userid)
     else:
@@ -71,10 +70,7 @@ def add_product(request):
         descripcion = request.params['descripcion']
         inventario = request.params['inventario']
         precio = request.params['precio']
-
-
         filename = request.POST['file'].filename
-        print "Imagen: "+ filename
         input_file = request.POST['file'].file
         extension = os.path.splitext(filename)[1]
         file_path = os.path.join('myapp/static/img/productos/', '%s' % uuid.uuid4()+extension)
@@ -83,8 +79,8 @@ def add_product(request):
         with open(temp_file_path, 'wb') as output_file:
             shutil.copyfileobj(input_file, output_file)
         os.rename(temp_file_path, file_path)
-
         img = os.path.basename(file_path)
+
         producto = Producto(nombre, descripcion, inventario, precio, img)
         DBSession.add(producto)
         return HTTPFound(request.route_url('list'))
@@ -126,23 +122,17 @@ def edit_product(request):
         producto.inventario = request.params['inventario']
         producto.precio = request.params['precio']
 
-
-        filename = request.POST['file'].filename
-        print request.POST['file']
-        print filename
-
-        input_file = request.POST['file'].file
-        extension = os.path.splitext(filename)[1]
-        file_path = os.path.join('myapp/static/img/productos/', '%s' % uuid.uuid4()+extension)
-        temp_file_path = file_path + '~'
-        input_file.seek(0)
-        with open(temp_file_path, 'wb') as output_file:
-            shutil.copyfileobj(input_file, output_file)
-        os.rename(temp_file_path, file_path)
-
-        producto.img = os.path.basename(file_path)
-
-
+        if request.POST['file'] != "":
+            filename = request.POST['file'].filename
+            input_file = request.POST['file'].file
+            extension = os.path.splitext(filename)[1]
+            file_path = os.path.join('myapp/static/img/productos/', '%s' % uuid.uuid4()+extension)
+            temp_file_path = file_path + '~'
+            input_file.seek(0)
+            with open(temp_file_path, 'wb') as output_file:
+                shutil.copyfileobj(input_file, output_file)
+            os.rename(temp_file_path, file_path)
+            producto.img = os.path.basename(file_path)
 
         DBSession.add(producto)
         return HTTPFound(request.route_url('list'))
@@ -236,6 +226,8 @@ def delete_user(request):
     user = DBSession.query(Usuario).filter_by(id=uid).one()
     if user is None:
         return HTTPFound(request.route_url('list_user'))
+    elif user.username == request.authenticated_userid:
+        return HTTPFound(request.route_url('list_user'))
     if 'form.confirmDelete' in request.params:
         DBSession.delete(user)
         return HTTPFound(request.route_url('list_user'))
@@ -256,7 +248,9 @@ def cuenta(request):
         user.nombre = request.params['nombre']
         user.apellido = request.params['apellido']
         user.username = request.params['username']
-        user.password = request.params['password']
+        if request.params['cambio']=="t":
+            user.password = request.params['password']
+
         user.rol = request.params['rol']
         DBSession.add(user)
         return HTTPFound(request.route_url('cuenta'))
@@ -276,7 +270,7 @@ def desactivar(request):
     if 'form.confirmDelete' in request.params:
         headers = forget(request)
         DBSession.delete(user)
-        return HTTPFound(location=request.route_url('home'), headers=headers)
+        return HTTPFound(location=request.route_url('login'), headers=headers)
     elif 'form.cancelar' in request.params:
         return HTTPFound(request.route_url('cuenta'))
 
@@ -313,7 +307,16 @@ def detalle_pedido_admin(request):
     uid = request.matchdict['uid']
     pedido = DBSession.query(Pedido).filter_by(id=uid).one()
     data = DBSession.query(Prod_Pedido).filter_by(pedido_id=pedido.id).all()
-    return dict(formData=data, pedido=pedido, logged_in=request.authenticated_userid, uid=uid)
+    if 'form.response' in request.params:
+        for prod in data:
+            p = DBSession.query(Producto).filter_by(id=prod.producto.id).one()
+            p.inventario = p.inventario - prod.unidades
+            DBSession.add(p)
+        pedido.estado = "Atendido"
+        DBSession.add(pedido)
+        return HTTPFound(request.route_url('admin_pedidos'))
+    save_form = request.route_url('detalle_pedido_admin', uid=uid)
+    return dict(response_pedido=save_form, formData=data, pedido=pedido, logged_in=request.authenticated_userid, uid=uid)
 
 
 @view_config(route_name='carrito', renderer='templates/client/chart.pt', permission='show')
@@ -399,7 +402,7 @@ def login(request):
 @view_config(route_name='logout')
 def logout(request):
     headers = forget(request)
-    return HTTPFound(location=request.route_url('home'), headers=headers)
+    return HTTPFound(location=request.route_url('login'), headers=headers)
 
 conn_err_msg = """\
 Pyramid is having a problem using your SQL database.  The problem

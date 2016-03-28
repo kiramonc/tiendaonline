@@ -40,9 +40,9 @@
                 </div>
             </div>
 
-            <div class="col-md-12" id="main">
-                <div class="content">
-                    <div class="well titulos" ng-controller="productoCtrl as prodCtrl" >
+            <div id="main">
+                <div class="content col-md-12">
+                    <div class="titulos" ng-controller="productoCtrl as prodCtrl" >
 
                         <center><h2><span class="font-semi-bold">Lista de productos</span></h2></center>
 
@@ -52,10 +52,10 @@
 
                         <table class="table table-bordered table-hover">
                             <thead class="encabezado-tabla"><tr>
-                                <th><center>Nombre</center></th>
-                                <th><center>Precio</center></th>
-                                <th><center>Stock</center></th>
-                                <th width="25%"></th>
+                                <th width="35%"><center>Nombre</center></th>
+                                <th width="20%"><center>Precio</center></th>
+                                <th width="10%"><center>Stock</center></th>
+                                <th width="35%"></th>
                             </tr></thead>
                             <tbody><tal:block repeat="item formData">
                                 <tr class="fila-tabla" onclick="location='/product/${item.nombre}'">

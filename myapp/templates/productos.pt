@@ -31,18 +31,12 @@
                     <ul class="nav nav-tabs nav-justified menu-principal">
                         <li role="presentation" ><a class="menu-item" href="/">Home</a></li>
                         <li role="presentation"><a class="menu-item" href="/productos">Productos</a></li>
-                        <li role="presentation">
-                            <a class="menu-login" href="/login"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Login</a>
-                        </li>
-                        <li role="presentation">
-                            <a class="menu-item" href="/register"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Register</a>
-                        </li>
                     </ul>
                 </div>
             </div>
 
-            <div class="col-md-12" id="main">
-                <div class="content">
+            <div id="main">
+                <div class="content col-md-12">
                     <div class="titulos" ng-controller="productoCtrl as prodCtrl" >
                         <h2 class="texto-centrado"><span class="font-semi-bold">Lista de productos</span></h2>
 
@@ -64,7 +58,7 @@
                                         <a class="btn btn-success" role="button" href="/productos/${item.nombre}">
                                             <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>Ver
                                         </a>
-                                        <a class="btn btn-success" role="button" href="/login">
+                                        <a class="btn btn-success" role="button" href="/">
                                             <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>Agregar
                                         </a>
                                     </center>

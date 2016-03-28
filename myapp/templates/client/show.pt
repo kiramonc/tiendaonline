@@ -27,7 +27,7 @@
                     <img class="logo img-responsive" src="${request.static_url('myapp:static/img/pyramid.png')}" alt="pyramid web framework">
                 </center>
                 </div>
-                <div class="col-md-11 ">
+                <div class="col-md-11" ng-app="adminCarrito" ng-controller="carritoCtrl">
                     <ul class="nav nav-tabs nav-justified menu-principal">
                         <li role="presentation" ><a class="menu-item" href="/client">Home</a></li>
                         <li role="presentation"><a class="menu-item" href="/products">Productos</a></li>
@@ -36,14 +36,14 @@
                             <a class="menu-login" href="/my-account"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Cuenta</a>
                         </li>
                         <li tal:condition="logged_in" role="presentation" >
-                            <a class="menu-item"  href="/logout"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Log-out</a>
+                            <a class="menu-item"  href="/logout" ng-click="reset()"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Log-out</a>
                         </li>
                     </ul>
                 </div>
             </div>
 
-            <div class="col-md-12" id="main">
-                <div class="content">
+            <div id="main">
+                <div class="content contenido-producto col-md-12">
                     <form id="formProd" class="form-horizontal" role="form" ng-controller="carritoCtrl">
                         <a id="carritoButton" href="/chart" class="btn btn-success pull-right" role="button">
                             <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>Ver carrito
@@ -51,7 +51,7 @@
                         </a>
                         <div class="imagen-producto">
                             <center>
-                                <img src="${request.application_url}/static/img/productos/${producto.img}"  class="img-responsive">
+                                <img src="${request.application_url}/static/img/productos/${producto.img}"  class="img-responsive" he>
                             </center>
                         </div>
                         <div class="datos-producto">
@@ -64,15 +64,15 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-4 col-md-4 control-label"> Descripción: <br/></label>
-                                <div class="col-sm-8 col-md-8">
-                                    <p id="inputDescripcion">${producto.descripcion}</p>
-                                </div>
-                            </div>
-                            <div class="form-group">
                                 <label class="col-sm-4 col-md-4 control-label"> En Stock: <br/></label>
                                 <div class="col-sm-8 col-md-8">
                                     <p class="form-control-static">${producto.inventario}</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 col-md-4 control-label"> Descripción: <br/></label>
+                                <div class="col-sm-8 col-md-8">
+                                    <p id="inputDescripcion">${producto.descripcion}</p>
                                 </div>
                             </div>
                             <br/>
@@ -93,6 +93,6 @@
     <script src="//oss.maxcdn.com/libs/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
     <script src="${request.static_url('myapp:static/angular/angular-local-storage.min.js')}"></script>
-    <script src="../static/angular/carrito.js?00.073"></script>
+    <script src="${request.static_url('myapp:static/angular/carrito.js')}"></script>
 </body>
 </html>

@@ -42,8 +42,8 @@
                 </div>
             </div>
 
-            <div class="col-md-12" id="main">
-                <div class="content">
+            <div id="main">
+                <div class="content col-md-12">
                     <div class="titulos" ng-controller="carritoCtrl" >
                         <a id="carritoButton" href="/chart" class="btn btn-success pull-right" role="button">
                             <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>Ver carrito
@@ -65,7 +65,7 @@
                                         </div>
                                     </div>
                                     <center>
-                                        <a class="btn btn-success" role="button" href="/productos/${item.nombre}">
+                                        <a class="btn btn-success" role="button" href="/products/${item.nombre}">
                                             <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>Ver
                                         </a>
                                         <a class="btn btn-success" role="button" ng-click="agregar('${item.nombre}','${item.precio}','${item.inventario}')">

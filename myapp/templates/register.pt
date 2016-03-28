@@ -32,63 +32,72 @@
                     <ul class="nav nav-tabs nav-justified menu-principal">
                         <li role="presentation" ><a class="menu-item" href="/">Home</a></li>
                         <li role="presentation"><a class="menu-item" href="/productos">Productos</a></li>
-                        <li role="presentation">
-                            <a class="menu-login" href="/login"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Login</a>
-                        </li>
-                        <li role="presentation">
-                            <a class="menu-item" href="/register"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Register</a>
-                        </li>
                     </ul>
                 </div>
             </div>
 
-            <div class="col-md-12" id="main">
-                <div class="content">
-                    <div class="well titulos" ng-controller="usuarioCtrl as userCtrl">
-                        <h2><span class="font-semi-bold">Crea tu cuenta </span> <span class="smaller">Accede a todos los servicios</span></h2>
-                        <form name="formCrearUser" class="form-horizontal" role="form" action="${save_form}" ng-submit="userCtrl.submitForm(formData)" method="post" novalidate>
-                            <div class="form-group">
-                                <label for="inputNombre" class="col-sm-2 control-label"> Nombre: <br/></label>
-                                <div class="col-sm-10">
-                                    <input id="inputNombre" type="text" class="form-control" placeholder="Nombre" name="nombre" ng-model="userCtrl.formData.nombre" required
-                                     ng-class="{error:!formCrearUser.$pristine && formCrearUser.nombre.$error.required}">
-                                    <br/>
+            <div id="main">
+                <div class="content col-md-12">
+                    <div class="titulos" ng-controller="usuarioCtrl as userCtrl">
+                        <div class="col-md-8">
+                            <h3><span class="smaller">Registro</span></h3><br/>
+                            <form name="formCrearUser" class="form-horizontal" role="form" action="${save_form}" ng-submit="userCtrl.submitForm(formData)" method="post" novalidate>
+                                <div class="form-group">
+                                    <label for="inputNombre" class="col-sm-2 control-label"> Nombre: <br/></label>
+                                    <div class="col-sm-10">
+                                        <input id="inputNombre" type="text" class="form-control" placeholder="Nombre" name="nombre" ng-model="userCtrl.formData.nombre" required
+                                         ng-class="{error:!formCrearUser.$pristine && formCrearUser.nombre.$error.required}">
+                                        <br/>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputApellido" class="col-sm-2 control-label"> Apellido: <br/></label>
-                                <div class="col-sm-10">
-                                    <input id="inputApellido" type="text" class="form-control" placeholder="Apellido" name="apellido" ng-model="userCtrl.formData.apellido" required
-                                    ng-class="{error:!formCrearUser.$pristine && formCrearUser.apellido.$error.required}"/>
-                                    <br/>
+                                <div class="form-group">
+                                    <label for="inputApellido" class="col-sm-2 control-label"> Apellido: <br/></label>
+                                    <div class="col-sm-10">
+                                        <input id="inputApellido" type="text" class="form-control" placeholder="Apellido" name="apellido" ng-model="userCtrl.formData.apellido" required
+                                        ng-class="{error:!formCrearUser.$pristine && formCrearUser.apellido.$error.required}"/>
+                                        <br/>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputUsername" class="col-sm-2 control-label"> Username: <br/></label>
-                                <div class="col-sm-10">
-                                    <input id="inputUsername" type="text" class="form-control" placeholder="Nombre de usuario" name="username" ng-model="userCtrl.formData.username" required
-                                    ng-class="{error:!formCrearUser.$pristine && formCrearUser.username.$error.required}">
-                                    <br/>
+                                <div class="form-group">
+                                    <label for="inputUsername" class="col-sm-2 control-label"> Username: <br/></label>
+                                    <div class="col-sm-10">
+                                        <input id="inputUsername" type="text" class="form-control" placeholder="Username" name="username" ng-model="userCtrl.formData.username" required
+                                        ng-class="{error:!formCrearUser.$pristine && formCrearUser.username.$error.required}">
+                                        <br/>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputPassword" class="col-sm-2 control-label"> Password: <br/></label>
-                                <div class="col-sm-10">
-                                    <input id="inputPassword" type="password" class="form-control" placeholder="Password" name="password" ng-model="userCtrl.formData.password" required
-                                    ng-class="{error:!formCrearUser.$pristine && formCrearUser.password.$error.required}">
-                                    <br/>
+                                <div class="form-group">
+                                    <label for="inputPassword" class="col-sm-2 control-label"> Password: <br/></label>
+                                    <div class="col-sm-10">
+                                        <input id="inputPassword" type="password" class="form-control" placeholder="Password" name="password" ng-model="userCtrl.formData.password" required
+                                        ng-class="{error:!formCrearUser.$pristine && formCrearUser.password.$error.required}">
+                                        <br/>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-sm-offset-2 col-sm-10">
-                                    <input id="inputRol" type="hidden" class="form-control" name="rol" ng-model="userCtrl.formData.rol" value="admins"/>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <input id="inputRol" type="hidden" class="form-control" name="rol" ng-model="userCtrl.formData.rol" value="admins"/>
 
-                                    <span ng-show="!formCrearUser.$pristine && formCrearUser.$invalid">Hay errores en el formulario</span>
-                                    <br/>
-                                    <button type="submit" name="form.submitted" class="btn btn-success" ng-disabled="!formCrearUser.$valid">Registrarse</button>
+                                        <span ng-show="!formCrearUser.$pristine && formCrearUser.$invalid">Hay errores en el formulario</span>
+                                        <br/>
+                                        <button type="submit" name="form.submitted" class="btn btn-success" ng-disabled="!formCrearUser.$valid">Registrarse</button>
+                                    </div>
                                 </div>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
+
+                        <div class="col-md-4">
+                            <center>
+                                <h2><span class="font-semi-bold">Crea tu cuenta</span></h2>
+                                <br/>
+                            </center>
+                            <center>
+                                <img class="logo img-responsive img-rounded" width="90%" src="${request.static_url('myapp:static/img/register.png')}">
+                                <br/>
+                                <h2><span class="smaller">Accede a todos los servicios</span></h2>
+                            </center>
+
+                        </div>
                     </div>
                 </div>
             </div>

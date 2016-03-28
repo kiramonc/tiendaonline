@@ -19,7 +19,7 @@
 
     <![endif]-->
 </head>
-<body ng-app="adminPedido">
+<body ng-app="adminPedido" ng-controller="pedidoCtrl as ctrl">
 <div class="wrapper">
     <div class="container">
         <div class="row">
@@ -28,7 +28,7 @@
                     <img class="logo img-responsive" src="${request.static_url('myapp:static/img/pyramid.png')}" alt="pyramid web framework">
                 </center>
                 </div>
-                <div class="col-md-11 ">
+                <div class="col-md-11" >
                     <ul class="nav nav-tabs nav-justified menu-principal">
                         <li role="presentation" ><a class="menu-item" href="/client">Home</a></li>
                         <li role="presentation"><a class="menu-item" href="/products">Productos</a></li>
@@ -37,15 +37,15 @@
                             <a class="menu-login" href="/my-account"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Cuenta</a>
                         </li>
                         <li tal:condition="logged_in" role="presentation" >
-                            <a class="menu-item"  href="/logout"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Log-out</a>
+                            <a class="menu-item"  href="/logout" ng-click="ctrl.reset()"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Log-out</a>
                         </li>
                     </ul>
                 </div>
             </div>
 
-            <div class="col-md-12" id="main">
-                <div class="content">
-                    <div class="well titulos" ng-controller="pedidoCtrl as ctrl" >
+            <div id="main">
+                <div class="content col-md-12">
+                    <div class="titulos">
                         <input type="hidden" id="url" value="${uid}">
                         <center><h2><span class="font-semi-bold">Detalle de pedido</span></h2></center>
                         <span class="font-semi-bold">Fecha: </span> <span>{{ctrl.fecha}}</span>
@@ -62,13 +62,13 @@
                                 <tr ng-repeat="item in ctrl.productos">
                                     <td>{{item.nombre}}</td>
                                     <td>{{item.unidades}}</td>
-                                    <td>{{item.precio}}</td>
-                                    <td>{{ item.precio * item.unidades }}</td>
+                                    <td><span class="glyphicon glyphicon-usd" aria-hidden="true"></span> {{item.precio}}</td>
+                                    <td><span class="glyphicon glyphicon-usd" aria-hidden="true"></span> {{item.precio*item.unidades}}</td>
                                 </tr>
                             <td></td>
                             <td></td>
                             <td style="text-align: right;font-weight: bold;">Total:</td>
-                            <td>{{ctrl.getTotal()}}</td>
+                            <td><span class="glyphicon glyphicon-usd" aria-hidden="true"></span> {{ctrl.getTotal()}}</td>
                             </tbody>
                         </table>
 
@@ -84,7 +84,9 @@
     <script src="//oss.maxcdn.com/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="//oss.maxcdn.com/libs/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+    <script src="${request.static_url('myapp:static/angular/angular-local-storage.min.js')}"></script>
     <script src="${request.static_url('myapp:static/angular/pedido.js')}"></script>
+    <script src="${request.static_url('myapp:static/angular/carrito.js')}"></script>
 
 
 </body>

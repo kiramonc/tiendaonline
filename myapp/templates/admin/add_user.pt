@@ -11,7 +11,7 @@
     <!-- Custom styles for this scaffold -->
     <link href="${request.static_url('myapp:static/css/theme.css')}" rel="stylesheet">
     <link href="${request.static_url('myapp:static/css/style.css')}" rel="stylesheet">
-    <link href="${request.static_url('myapp:static/css/angular_validation.css')}" rel="stylesheet">
+    <link href="../static/css/angular_validation.css?00.002" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -41,16 +41,16 @@
                 </div>
             </div>
 
-            <div class="col-md-12" id="main">
-                <div class="content">
-                    <div class="well titulos" ng-controller="usuarioCtrl as userCtrl">
+            <div id="main">
+                <div class="content col-md-12">
+                    <div class="titulos" ng-controller="usuarioCtrl as userCtrl">
                         <h2><span class="font-semi-bold">Ingrese un usuario</span> <span class="smaller">nuevo</span></h2>
-                        <form name="formCrearUser" class="form-horizontal" role="form" action="${save_form}" ng-submit="userCtrl.submitForm(formData)" method="post" novalidate>
+                        <form name="formCrearUser" class="form-horizontal css-form" role="form" action="${save_form}" ng-submit="userCtrl.submitForm(formData)" method="post" novalidate>
                             <div class="form-group">
                                 <label for="inputNombre" class="col-sm-2 control-label"> Nombre: <br/></label>
                                 <div class="col-sm-10">
                                     <input id="inputNombre" type="text" class="form-control" placeholder="Nombre" name="nombre" ng-model="userCtrl.formData.nombre" required
-                                     ng-class="{error:!formCrearUser.$pristine && formCrearUser.nombre.$error.required}">
+                                     >
                                     <br/>
                                 </div>
                             </div>
@@ -58,7 +58,7 @@
                                 <label for="inputApellido" class="col-sm-2 control-label"> Apellido: <br/></label>
                                 <div class="col-sm-10">
                                     <input id="inputApellido" type="text" class="form-control" placeholder="Apellido" name="apellido" ng-model="userCtrl.formData.apellido" required
-                                    ng-class="{error:!formCrearUser.$pristine && formCrearUser.apellido.$error.required}"/>
+                                    />
                                     <br/>
                                 </div>
                             </div>
@@ -66,24 +66,29 @@
                                 <label for="inputUsername" class="col-sm-2 control-label"> Username: <br/></label>
                                 <div class="col-sm-10">
                                     <input id="inputUsername" type="text" class="form-control" placeholder="Nombre de usuario" name="username" ng-model="userCtrl.formData.username" required
-                                    ng-class="{error:!formCrearUser.$pristine && formCrearUser.username.$error.required}">
+                                    >
                                     <br/>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="inputPassword" class="col-sm-2 control-label"> Password: <br/></label>
-                                <div class="col-sm-10">
+                                <label for="inputPassword" class="col-sm-2 col-md-2 control-label"> Password: <br/></label>
+                                <div class="col-sm-10 col-md-2">
                                     <input id="inputPassword" type="password" class="form-control" placeholder="Password" name="password" ng-model="userCtrl.formData.password" required
-                                    ng-class="{error:!formCrearUser.$pristine && formCrearUser.password.$error.required}">
+                                    >
                                     <br/>
+                                </div>
+                                <label for="inputPasswordR" class="col-sm-2 col-md-2 control-label"> Confirmar Password: <br/></label>
+                                <div class="col-sm-10 col-md-2">
+                                    <input id="inputPasswordR" type="password" class="form-control" placeholder="Repita Password" name="passwordR" ng-model="userCtrl.formData.passwordR" required
+                                    pass-match="inputPassword">
+                                </div>
+                                <div class="col-md-2" ng-show="formCrearUser.$error">
+                                    <span ng-show="formCrearUser.passwordR.$dirty && formCrearUser.passwordR.$error.pwmatch">El password no coincide.</span>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-10">
-                                    <input id="inputRol" type="hidden" class="form-control" name="rol" ng-model="userCtrl.formData.rol" value="admins"/>
-
-                                    <span ng-show="!formCrearUser.$pristine && formCrearUser.$invalid">Hay errores en el formulario</span>
-                                    <br/>
+                                    <input id="inputRol" type="hidden" class="form-control" name="rol" ng-model="userCtrl.formData.rol" value="admins"/><br/>
                                     <button type="submit" name="form.submitted" class="btn btn-success" ng-disabled="!formCrearUser.$valid">Guardar</button>
                                     <a href="/user" class="btn btn-default" role="button">Cancelar</a>
                                 </div>
@@ -101,6 +106,6 @@
     <script src="//oss.maxcdn.com/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="//oss.maxcdn.com/libs/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
-    <script src="../static/angular/usuario.js?00.001"></script>
+    <script src="../static/angular/usuario.js?00.020"></script>
 </body>
 </html>

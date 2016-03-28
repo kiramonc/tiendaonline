@@ -8,3 +8,24 @@
     -webkit-box-shadow:inset 0 0px 4px rgba(210,50,45,0.6), 0 0px 4px rgba(210,50,45,0.6);
     box-shadow:inset 0 0px 4px rgba(210,50,45,0.6);
 }
+
+.css-form input.ng-invalid.ng-dirty{
+    border-color:#D2322D;
+    outline:0;
+    -webkit-box-shadow:inset 0 0px 4px rgba(210,50,45,0.6), 0 0px 4px rgba(210,50,45,0.6);
+    box-shadow:inset 0 0px 4px rgba(210,50,45,0.6);
+}
+
+.css-form input.ng-invalid.ng-touched{
+    border-color:#D2322D;
+    outline:0;
+    -webkit-box-shadow:inset 0 0px 4px rgba(210,50,45,0.6), 0 0px 4px rgba(210,50,45,0.6);
+    box-shadow:inset 0 0px 4px rgba(210,50,45,0.6);
+}
+
+.css-form textarea.ng-invalid.ng-touched{
+    border-color:#D2322D;
+    outline:0;
+    -webkit-box-shadow:inset 0 0px 4px rgba(210,50,45,0.6), 0 0px 4px rgba(210,50,45,0.6);
+    box-shadow:inset 0 0px 4px rgba(210,50,45,0.6);
+}

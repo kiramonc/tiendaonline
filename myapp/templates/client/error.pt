@@ -27,7 +27,7 @@
                     <img class="logo img-responsive" src="${request.static_url('myapp:static/img/pyramid.png')}" alt="pyramid web framework">
                 </center>
                 </div>
-                <div class="col-md-11 ">
+                <div class="col-md-11" ng-app="adminCarrito" ng-controller="carritoCtrl">
                     <ul class="nav nav-tabs nav-justified menu-principal">
                         <li role="presentation" ><a class="menu-item" href="/client">Home</a></li>
                         <li role="presentation"><a class="menu-item" href="/products">Productos</a></li>
@@ -36,14 +36,14 @@
                             <a class="menu-login" href="/my-account"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Cuenta</a>
                         </li>
                         <li tal:condition="logged_in" role="presentation" >
-                            <a class="menu-item"  href="/logout"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Log-out</a>
+                            <a class="menu-item"  href="/logout" ng-click="reset()"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Log-out</a>
                         </li>
                     </ul>
                 </div>
             </div>
 
-            <div class="col-md-12" id="main">
-                <div class="content">
+            <div id="main">
+                <div class="content col-md-12">
                     <center>
                         <span><b/></span>
                         <h2><span class="font-semi-bold">ha ocurrido un error</span> </h2>
@@ -60,5 +60,8 @@
 
     <script src="//oss.maxcdn.com/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="//oss.maxcdn.com/libs/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+    <script src="${request.static_url('myapp:static/angular/angular-local-storage.min.js')}"></script>
+    <script src="${request.static_url('myapp:static/angular/carrito.js')}"></script>
 </body>
 </html>

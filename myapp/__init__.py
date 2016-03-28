@@ -29,10 +29,9 @@ def main(global_config, **settings):
     config.add_route('pag-error', '/error')   # para el inicio de la app
     config.add_route('error-admin', '/error-admin')   # para el inicio de la app
     config.add_route('error-client', '/error-client')   # para el inicio de la app
-    config.add_route('home', '/')   # para el inicio de la app
+    config.add_route('login', '/')   # para el inicio de la app
     config.add_route('home-admin', '/admin')   # para el inicio de la app
     config.add_route('home-client', '/client')   # para el inicio de la app
-    config.add_route('login', '/login')
     config.add_route('logout', '/logout')
     config.add_route('add', '/add')   # para agregar un nuevo producto
     config.add_route('list', '/product')        # para ver el listado de productos

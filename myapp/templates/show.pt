@@ -31,18 +31,12 @@
                     <ul class="nav nav-tabs nav-justified menu-principal">
                         <li role="presentation" ><a class="menu-item" href="/">Home</a></li>
                         <li role="presentation"><a class="menu-item" href="/productos">Productos</a></li>
-                        <li role="presentation">
-                            <a class="menu-login" href="/login"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Login</a>
-                        </li>
-                        <li role="presentation">
-                            <a class="menu-item" href="/register"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Register</a>
-                        </li>
                     </ul>
                 </div>
             </div>
 
-            <div class="col-md-12" id="main">
-                <div class="content">
+            <div id="main">
+                <div class="content contenido-producto col-md-12">
                     <form id="formProd" class="form-horizontal" role="form" >
                         <div class="imagen-producto">
                             <center>
@@ -59,19 +53,19 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-4 col-md-4 control-label"> Descripción: <br/></label>
-                                <div class="col-sm-8 col-md-8">
-                                    <p id="inputDescripcion">${producto.descripcion}</p>
-                                </div>
-                            </div>
-                            <div class="form-group">
                                 <label class="col-sm-4 col-md-4 control-label"> En Stock: <br/></label>
                                 <div class="col-sm-8 col-md-8">
                                     <p class="form-control-static">${producto.inventario}</p>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 col-md-4 control-label"> Descripción: <br/></label>
+                                <div class="col-sm-8 col-md-8">
+                                    <p id="inputDescripcion">${producto.descripcion}</p>
+                                </div>
+                            </div>
                             <br/>
-                            <center><a class="btn btn-success" role="button" href="/login">
+                            <center><a class="btn btn-success" role="button" href="/">
                                 <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>Agregar a carrito
                             </a></center>
                         </div>

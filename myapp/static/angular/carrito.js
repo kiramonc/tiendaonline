@@ -6,6 +6,15 @@ function efecto(){
     }, false);
 }
 
+function unidadModificada(nodo){
+    var nodoTd = nodo.parentNode.parentNode;
+    $(nodoTd).addClass("warning");
+    var pedidoB = document.getElementById("pedidoButton");
+    pedidoB.setAttribute("disabled", "disabled");
+    var establecerB = document.getElementById("establecerButton");
+    establecerB.removeAttribute("disabled");
+}
+
 angular
     .module("adminCarrito", ['LocalStorageModule'])
     .config(['localStorageServiceProvider', function(localStorageServiceProvider){
@@ -30,8 +39,14 @@ angular
             localStorageService.set("ls.productos", $scope.productos);
         };
 
-        $scope.editar = function (indice) {
+        $scope.editar = function () {
             localStorageService.set("ls.productos", $scope.productos);
+            var nodoTd= document.getElementsByTagName("tr");
+            $(nodoTd).removeClass("warning");
+            var pedidoB = document.getElementById("pedidoButton");
+            pedidoB.removeAttribute("disabled");
+            var establecerB = document.getElementById("establecerButton");
+            establecerB.setAttribute("disabled", "disabled");
         };
 
         $scope.enviar = function (data) {
@@ -45,6 +60,12 @@ angular
         $scope.redireccionar = function(data){
             var url = "/products/"+$scope.productos[data]["nombre"]
             window.location=url;
+        }
+
+        $scope.reset = function(){
+            console.log("Carrito reseteado");
+            $scope.productos=[];
+            localStorageService.remove("ls.productos");
         }
 
     })

@@ -40,8 +40,8 @@
                 </div>
             </div>
 
-            <div class="col-md-12" id="main">
-                <div class="content">
+            <div id="main">
+                <div class="content col-md-12">
                     <center>
                         <span><b/></span>
                         <h2><span class="font-semi-bold">ha ocurrido un error</span> </h2>

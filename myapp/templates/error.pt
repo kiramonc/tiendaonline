@@ -31,18 +31,12 @@
                     <ul class="nav nav-tabs nav-justified menu-principal">
                         <li role="presentation" ><a class="menu-item" href="/">Home</a></li>
                         <li role="presentation"><a class="menu-item" href="/productos">Productos</a></li>
-                        <li role="presentation">
-                            <a class="menu-login" href="/login"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Login</a>
-                        </li>
-                        <li role="presentation">
-                            <a class="menu-item" href="/register"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Register</a>
-                        </li>
                     </ul>
                 </div>
             </div>
 
             <div class="col-md-12" id="main">
-                <div class="content">
+                <div class=" col-md-12 content">
                     <center>
                         <span><b/></span>
                         <h2><span class="font-semi-bold">ha ocurrido un error</span> </h2>

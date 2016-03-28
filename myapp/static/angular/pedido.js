@@ -1,7 +1,15 @@
 angular
-    .module("adminPedido", [])
-    .controller("pedidoCtrl", function($http){
-        var scope = this;
+    .module("adminPedido", ['LocalStorageModule'])
+    .config(['localStorageServiceProvider', function(localStorageServiceProvider){
+        localStorageServiceProvider.setPrefix('ls');
+    }])
+    .controller("pedidoCtrl", function($http, localStorageService){
+        var scope= this;
+        if (localStorageService.get("ls.productos")) {
+          scope.productos = localStorageService.get("ls.productos");
+        } else {
+          scope.productos=[];
+        }
         scope.productos = [];
         scope.fecha = "";
         scope.cliente = {};
@@ -21,9 +29,21 @@ angular
             return total;
         }
 
-
         scope.verDetalle= function(id){
             url = "/pedidos/"+id+"/detalle";
             window.location=url;
+        }
+
+        scope.reset = function(){
+            scope.productos=[];
+            console.log("Carrito reseteado");
+            localStorageService.remove("ls.productos");
+        }
+
+        scope.comprobarEstado = function(estado){
+            if(estado=="Atendido"){
+                return false;
+            }
+            return true;
         }
     })

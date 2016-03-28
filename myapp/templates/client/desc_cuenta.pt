@@ -27,13 +27,13 @@
             </div>
             <div class="col-md-10">
                 <div class="content">
-                    <div class="well titulos">
+                    <div class="well titulos" ng-app="adminCarrito" ng-controller="carritoCtrl">
                         <h2><span class="font-semi-bold">¿Realmente desea desactivar la cuenta: ${user.nombre}?</span></h2>
                         <form class="form-horizontal" role="form" action="${delete_form}" method="post">
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-10">
                                     <button type="submit" name="form.cancelar" class="btn btn-success">Cancelar</button>
-                                    <button type="submit" name="form.confirmDelete" class="btn btn-danger">Desactivar</button>
+                                    <button type="submit" name="form.confirmDelete" ng-click="reset()" class="btn btn-danger">Desactivar</button>
                                 </div>
                             </div>
                         </form>
@@ -49,5 +49,8 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="//oss.maxcdn.com/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="//oss.maxcdn.com/libs/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+    <script src="${request.static_url('myapp:static/angular/angular-local-storage.min.js')}"></script>
+    <script src="${request.static_url('myapp:static/angular/carrito.js')}"></script>
 </body>
 </html>

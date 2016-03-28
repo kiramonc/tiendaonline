@@ -40,9 +40,9 @@
                 </div>
             </div>
 
-            <div class="col-md-12" id="main">
-            <div class="content">
-                <div class="well titulos">
+            <div id="main">
+            <div class="content col-md-12">
+                <div class="titulos">
               <h2><span class="font-semi-bold">Editando ${producto.nombre}</span></h2>
 
               <form class="form-horizontal" role="form" action="${save_form}" method="post"

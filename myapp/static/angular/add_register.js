@@ -1,12 +1,19 @@
 angular
-    .module("adminProducto", [])
-    .controller("productoCtrl", function(){
+    .module("adminProducto", ['LocalStorageModule'])
+    .config(['localStorageServiceProvider', function(localStorageServiceProvider){
+        localStorageServiceProvider.setPrefix('ls');
+    }])
+    .controller("productoCtrl", function(localStorageService){
         var scope= this;
+        if (localStorageService.get("ls.productos")) {
+          scope.productos = localStorageService.get("ls.productos");
+        } else {
+          scope.productos=[];
+        }
 
         scope.submitForm = function (formData) {
             console.log("Datos: ");
             console.log(typeof(formData));
-            alert('Form submitted with' + JSON.stringify(formData));
             scope.save_form = 'valido';
         };
 
@@ -20,6 +27,12 @@ angular
             )
 
         };
+
+        scope.reset = function(){
+            scope.productos=[];
+            console.log("Carrito reseteado");
+            localStorageService.remove("ls.productos");
+        }
 
         scope.tipo="";
         scope.mostrar=false;
