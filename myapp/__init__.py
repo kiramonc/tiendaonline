@@ -57,6 +57,7 @@ def main(global_config, **settings):
     config.add_route('ver_prod', '/productos/{uid}')
 
     config.add_route('generate_ajax_data', '/ajax_view')
+    config.add_route('data_pedidos', '/pedidos_data')
     config.add_route('get_data', '/pedido_data/{uid}')
     config.add_route('data_products', '/products_data')
     config.add_route('data_product', '/product_data/{uid}')

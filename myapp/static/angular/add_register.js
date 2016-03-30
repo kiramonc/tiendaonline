@@ -20,11 +20,21 @@ angular
         $http.get("/products_data").then(function (response) {
             scope.productos = response.data.productos;
         });
-        scope.iniciar = function(){
+        scope.nofiltrar = function(){
             scope.buscar= 100000000;
         }
         scope.filtrar = function(){
             scope.buscar= 10;
+        }
+        scope.predicate = 'nombre';
+        scope.reverse = true;
+        scope.order = function (por){
+            if(scope.predicate === por){
+                scope.reverse = !scope.reverse;
+            }else{
+                scope.reverse = false;
+            }
+            scope.predicate = por;
         }
         scope.ver = function(indice){
             var url='/product/'+scope.productos[indice].nombre;

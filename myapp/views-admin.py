@@ -166,8 +166,17 @@ def detalle_pedido_admin(request):
 
 @view_config(route_name='admin_pedidos', renderer='templates/admin/pedidos.pt', permission='edit')
 def admin_pedidos(request):
+    return dict(logged_in=request.authenticated_userid)
+
+
+@view_config(route_name='data_pedidos', renderer="json")
+def data_pedidos(request):
     data = DBSession.query(Pedido).all()
-    return dict(formData=data, logged_in=request.authenticated_userid)
+    pedidos = []
+    for pd in data:
+        pedidos.append({"id": pd.id, "fecha": pd.fecha.strftime("%d-%m-%Y %H:%M"),
+        "estado": pd.estado, "cliente": pd.cliente.username})
+    return {"pedidos": pedidos}
 
 
 @view_config(route_name='data_products', renderer="json")

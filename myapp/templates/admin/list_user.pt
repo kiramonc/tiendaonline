@@ -49,14 +49,20 @@
                         <br/>
                         <table class="table table-bordered table-hover">
                             <thead class="encabezado-tabla"><tr>
-                                <th width="20%"><center>Nombre</center></th>
-                                <th width="20%"><center>Apellido</center></th>
-                                <th width="15%"><center>Username</center></th>
+                                <th width="20%"><center>Nombre<br>
+                                    <input placeholder="Search" ng-model="userb.nombre"/>
+                                </center></th>
+                                <th width="20%"><center>Apellido<br>
+                                    <input placeholder="Search" ng-model="userb.apellido"/>
+                                </center></th>
+                                <th width="15%"><center>Username<br>
+                                    <input placeholder="Search" ng-model="userb.username"/>
+                                </center></th>
                                 <th width="15%"><center>Tipo</center></th>
                                 <th width="30%"></th>
                             </tr></thead>
                             <tbody>
-                                <tr ng-repeat="item in userCtrl.usuarios">
+                                <tr ng-repeat="item in userCtrl.usuarios | filter: userb">
                                     <td>{{item.nombre}}</td>
                                     <td>{{item.apellido}}</td>
                                     <td>{{item.username}}</td>

@@ -148,6 +148,13 @@ a.menu-item:hover {
   border-color: yellow;
 }
 
+.sortorder:after {
+  content: '\25b2';
+}
+.sortorder.reverse:after {
+  content: '\25bc';
+}
+
 
 @-webkit-keyframes tada {
   from {
