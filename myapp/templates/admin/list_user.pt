@@ -18,7 +18,7 @@
       <script src="//oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
 </head>
-<body>
+<body ng-app="adminUsuario">
 <div class="wrapper">
     <div class="container">
         <div class="row">
@@ -33,7 +33,7 @@
                         <li role="presentation"><a class="menu-item" href="/user">Usuario</a></li>
                         <li role="presentation"><a class="menu-item" href="/product">Productos</a></li>
                         <li role="presentation"><a class="menu-item" href="/admin-pedidos">Pedidos</a></li>
-                        <li tal:condition="logged_in" role="presentation" >
+                        <li ng-if="'${logged_in}'" role="presentation">
                             <a class="menu-item"  href="${request.application_url}/logout"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Log-out</a>
                         </li>
                     </ul>
@@ -42,38 +42,39 @@
 
             <div id="main">
                 <div class="content col-md-12">
-                    <div class="titulos" >
+                    <div class="titulos" ng-controller="usuarioCtrl as userCtrl">
                         <center><h2><span class="font-semi-bold">Lista de usuarios</span></h2></center>
-
                         <a href="/add-user" class="btn btn-success pull-right" role="button"><i class="glyphicon glyphicon-plus-sign"></i> Nuevo Admin</a>
                         <br/>
                         <br/>
                         <table class="table table-bordered table-hover">
                             <thead class="encabezado-tabla"><tr>
-                                <th width="25%"><center>Nombre</center></th>
-                                <th width="25%"><center>Apellido</center></th>
-                                <th width="20%"><center>Username</center></th>
+                                <th width="20%"><center>Nombre</center></th>
+                                <th width="20%"><center>Apellido</center></th>
+                                <th width="15%"><center>Username</center></th>
+                                <th width="15%"><center>Tipo</center></th>
                                 <th width="30%"></th>
                             </tr></thead>
-                            <tbody><tal:block repeat="item formData">
-                                <tr class="fila-tabla">
-                                    <td>${item.nombre}</td>
-                                    <td>${item.apellido}</td>
-                                    <td>${item.username}</td>
+                            <tbody>
+                                <tr ng-repeat="item in userCtrl.usuarios">
+                                    <td>{{item.nombre}}</td>
+                                    <td>{{item.apellido}}</td>
+                                    <td>{{item.username}}</td>
+                                    <td>{{item.rol | typeuser}}</td>
                                     <td>
                                         <div class="col-md-6 col-xs-12">
-                                            <a href="/user/${item.id}/edit" class="btn btn-success" role="button" style="width: 100%;">
+                                            <a href="/user/{{item.id}}/edit" class="btn btn-success" role="button" style="width: 100%;">
                                                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Editar
                                             </a>
                                         </div>
-                                        <div class="col-md-6 col-xs-12">
-                                            <a tal:condition="item.username!=logged_in" href="/user/${item.id}/delete" class="btn btn-danger" role="button" style="width: 100%;">
+                                        <div class="col-md-6 col-xs-12" ng-if="item.username != '${logged_in}'">
+                                            <a href="/user/{{item.id}}/delete" class="btn btn-danger" role="button" style="width: 100%;">
                                                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Eliminar
                                             </a>
                                         </div>
                                     </td>
                                 </tr>
-                            </tal:block></tbody>
+                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -86,5 +87,7 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="//oss.maxcdn.com/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="//oss.maxcdn.com/libs/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+    <script src="../static/angular/usuario.js?00.020"></script>
 </body>
 </html>

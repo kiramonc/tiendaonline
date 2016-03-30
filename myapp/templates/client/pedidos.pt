@@ -35,7 +35,7 @@
                         <li role="presentation">
                             <a class="menu-login" href="/my-account"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Cuenta</a>
                         </li>
-                        <li tal:condition="logged_in" role="presentation" >
+                        <li ng-if="'${logged_in}'" role="presentation" >
                             <a class="menu-item"  href="/logout" ng-click="reset()"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Log-out</a>
                         </li>
                     </ul>

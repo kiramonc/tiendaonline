@@ -1,9 +1,82 @@
 angular
-    .module("adminUsuario", ['LocalStorageModule'])
+    .module("adminUser", [])
+    .controller("userCtrl", function($scope, $http){
+        var inputPass = document.getElementById("inputPassword");
+        var inputPassr = document.getElementById("inputPasswordR");
+        $scope.cambio = 'f';
+
+        $scope.usuario={};
+        if(document.getElementById("url")){
+            $scope.url = "/user_data/"+document.getElementById("url").value;
+            $http.get($scope.url).then(function (response) {
+                $scope.usuario = response.data.usuario;
+            });
+        }
+
+        $scope.comprobarPass = function(){
+            if($scope.passwordConfirm==$scope.password){
+                $scope.password="";
+            }
+        }
+
+        $scope.establecerVacio = function(){
+            $scope.formData.password="";
+            $scope.formData.passwordR="";
+        }
+
+        $scope.cambiarPass = function(){
+            if($scope.cambio==='t'){
+                inputPass.setAttribute("required", '');
+                inputPassr.setAttribute("required", '');
+            }else{
+                inputPass.removeAttribute("required");
+                inputPassr.removeAttribute("required");
+                $scope.establecerVacio();
+                inputPassr.removeAttribute("disabled");
+            }
+        }
+    })
+    .directive('passMatch', [function () {
+        return {
+            require: 'ngModel',
+            link: function (scope, elem, attrs, ctrl) {
+                var password = '#' + attrs.passMatch;
+                elem.add(password).on('keyup', function () {
+                    scope.$apply(function () {
+                        ctrl.$setValidity('pwmatch', elem.val() === $(password).val());
+                    });
+                });
+            }
+        }
+    }]);
+
+angular
+    .module("adminUsuario", [])
+    .controller("usuarioCtrl", function($http){
+        var scope= this;
+
+        scope.usuarios=[];
+        $http.get("/users_data").then(function (response) {
+            scope.usuarios = response.data.usuarios;
+            console.log(scope.usuarios)
+        });
+    })
+    .filter('typeuser', function(){
+        return function(input){
+            if(input == "admins"){
+                return "Administrador";
+            }else{
+                return "Cliente";
+            }
+        }
+    });
+
+angular
+    .module("adminCuenta", ['LocalStorageModule'])
     .config(['localStorageServiceProvider', function(localStorageServiceProvider){
         localStorageServiceProvider.setPrefix('ls');
     }])
-    .controller("usuarioCtrl", function(localStorageService){
+    .controller("cuentaCtrl", function(localStorageService){
         var scope= this;
         if (localStorageService.get("ls.productos")) {
           scope.productos = localStorageService.get("ls.productos");
@@ -14,16 +87,7 @@ angular
         var inputPass = document.getElementById("inputPassword");
         var inputPassr = document.getElementById("inputPasswordR");
         var botonActualizar = document.getElementById("botonActualizar");
-        scope.clase={error:false}
-        scope.user = {};
         scope.cambio = 'f';
-        scope.submitForm = function (formData) {
-            console.log("Datos: ");
-            console.log(typeof(formData));
-        };
-        scope.userEdit= function(usuario){
-            console.log(usuario.nombre);
-        };
 
         scope.comprobarPass = function(){
             if(scope.passwordConfirm==scope.password){
@@ -32,8 +96,8 @@ angular
         }
 
         scope.establecerVacio = function(){
-            inputPass.value="";
-            inputPassr.value="";
+            scope.formData.password="";
+            scope.formData.passwordR="";
         }
 
         scope.cambiarPass = function(){

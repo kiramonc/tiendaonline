@@ -34,7 +34,7 @@
                         <li role="presentation"><a class="menu-item" href="/user">Usuario</a></li>
                         <li role="presentation"><a class="menu-item" href="/product">Productos</a></li>
                         <li role="presentation"><a class="menu-item" href="/admin-pedidos">Pedidos</a></li>
-                        <li tal:condition="logged_in" role="presentation" >
+                        <li ng-if="'${logged_in}'" role="presentation">
                             <a class="menu-item"  href="${request.application_url}/logout"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Log-out</a>
                         </li>
                     </ul>
@@ -43,28 +43,31 @@
 
             <div id="main">
                 <div class="content col-md-12">
-                    <div class="titulos" ng-controller="productoCtrl as prodCtrl">
+                    <div class="titulos" ng-controller="productoCtrl">
                         <h2><span class="font-semi-bold">Ingrese un producto</span> <span class="smaller">nuevo</span></h2>
-                        <form name="formCrearProd" class="form-horizontal css-form" role="form" action="${save_form}" ng-submit="prodCtrl.submitForm(formData)" method="post" novalidate
+                        <form name="formCrearProd" class="form-horizontal css-form" role="form" action="${save_form}" method="post" novalidate
                         accept-charset="utf-8" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label for="inputNombre" class="col-sm-2 control-label"> Nombre: <br/></label>
                                 <div class="col-sm-10">
-                                    <input id="inputNombre" type="text" class="form-control" placeholder="Nombre producto" name="nombre" ng-model="prodCtrl.formData.nombre" required>
+                                    <input id="inputNombre" type="text" class="form-control" placeholder="Nombre producto"
+                                           name="nombre" ng-model="formData.nombre" required>
                                     <br/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputDescripcion" class="col-sm-2 control-label"> Descripción: <br/></label>
                                 <div class="col-sm-10">
-                                    <textarea id="inputDescripcion" type="text" class="form-control" rows="3" name="descripcion" ng-model="prodCtrl.formData.descripcion" required></textarea>
+                                    <textarea id="inputDescripcion" type="text" class="form-control" rows="3"
+                                              name="descripcion" ng-model="formData.descripcion" required></textarea>
                                     <br/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputPrecio" class="col-sm-2 control-label"> Precio: <br/></label>
                                 <div class="col-sm-10">
-                                    <input id="inputPrecio" type="number" class="form-control" placeholder="Precio de producto" name="precio" ng-model="prodCtrl.formData.precio" required>
+                                    <input id="inputPrecio" type="number" class="form-control" placeholder="Precio de producto"
+                                           name="precio" ng-model="formData.precio" required>
                                     <br/>
                                 </div>
                             </div>
@@ -78,13 +81,13 @@
                             <div class="form-group">
                                 <label for="inputInventario" class="col-sm-2 control-label"> Inventario: <br/></label>
                                 <div class="col-sm-10">
-                                    <input id="inputInventario" type="number" class="form-control" placeholder="Número de inventario" name="inventario" ng-model="prodCtrl.formData.inventario" required>
+                                    <input id="inputInventario" type="number" class="form-control" placeholder="Número de inventario"
+                                           name="inventario" ng-model="formData.inventario" required>
                                     <br/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-10">
-                                    <br/>
                                     <button type="submit" name="form.submitted" class="btn btn-success" ng-disabled="!formCrearProd.$valid">Guardar</button>
                                     <a href="/product" class="btn btn-default" role="button">Cancelar</a>
                                 </div>

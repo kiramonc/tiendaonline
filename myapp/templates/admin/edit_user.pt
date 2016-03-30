@@ -19,9 +19,9 @@
       <script src="//oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
 </head>
-<body ng-app="adminUsuario">
+<body ng-app="adminUser">
 <div class="wrapper">
-    <div class="container">
+    <div class="container" ng-controller="userCtrl">
         <div class="row">
             <div id="header-page">
                 <div class="col-md-1 "><center>
@@ -34,8 +34,8 @@
                         <li role="presentation"><a class="menu-item" href="/user">Usuario</a></li>
                         <li role="presentation"><a class="menu-item" href="/product">Productos</a></li>
                         <li role="presentation"><a class="menu-item" href="/admin-pedidos">Pedidos</a></li>
-                        <li tal:condition="logged_in" role="presentation" >
-                            <a class="menu-item"  href="${request.application_url}/logout"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Log-out</a>
+                        <li ng-if="'${logged_in}'"  role="presentation" >
+                            <a class="menu-item"  href="/logout"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Log-out</a>
                         </li>
                     </ul>
                 </div>
@@ -43,45 +43,55 @@
 
             <div id="main">
             <div class="content col-md-12">
-                <div class="titulos" ng-controller="usuarioCtrl as userCtrl">
-                    <h2><span class="font-semi-bold">Editando ${user.nombre}</span></h2>
+                <div class="titulos">
+                    <h2><span class="font-semi-bold">Editando {{usuario.nombre}}</span></h2>
+                    <input type="hidden" id="url" value="${uid}">
                     <form name="formEditarUser" class="form-horizontal css-form" role="form" action="${save_form}" method="post">
                         <div class="form-group">
                             <label for="inputNombre" class="col-sm-2 control-label"> Nombre: <br/></label>
                             <div class="col-sm-10">
                                 <input id="inputNombre" type="text" class="form-control" placeholder="Nombre" name="nombre"
-                                       ng-model="userCtrl.nombre" ng-init="userCtrl.nombre= '${user.nombre}'" required/><br/>
+                                       ng-model="usuario.nombre" required/><br/>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="inputApellido" class="col-sm-2 control-label"> Apellido: <br/></label>
                             <div class="col-sm-10">
                                 <input id="inputApellido" type="text" class="form-control" placeholder="Apellido" name="apellido"
-                                       ng-model="userCtrl.apellido" ng-init="userCtrl.apellido= '${user.apellido}'" required/><br/>
+                                       ng-model="usuario.apellido" required/><br/>
                             </div>
                         </div>
+
                         <div class="form-group">
-                            <label for="inputUsername" class="col-sm-2 control-label"> Username: <br/></label>
-                            <div class="col-sm-10">
-                                <input id="inputUsername" type="text" readonly class="form-control" name="username" value="${user.username}"/><br/>
+                            <label for="inputUsername" class="col-sm-2 col-md-2 control-label"> Username:</label>
+                            <div class="col-sm-10 col-md-2">
+                                <input id="inputUsername" type="text" readonly class="form-control" name="username" value="{{usuario.username}}"/>
+                            </div>
+
+                            <label for="inputRol" class="col-sm-2 col-md-2 control-label"> Rol:</label>
+                            <div class="col-sm-10 col-md-2">
+                                <input id="inputRol" type="text" readonly class="form-control" name="rol" value="{{usuario.rol}}"/><br/>
                             </div>
                         </div>
+
+
                         <div class="form-group">
                             <div class="col-sm-12 col-md-12">
-                                <label for="checkCambio" class="col-sm-2 control-label"> Cambiar contraseña: <br/></label>
-                                <input id="checkCambio" type="checkbox" ng-model="userCtrl.cambio" name="cambio"/>
+                                <input type="hidden" name="cambio" value="{{cambio}}">
+                                <label for="checkCambio" class="col-sm-2 control-label"> Cambiar contraseña:</label>
+                                <input id="checkCambio" ng-model="cambio" type="radio" value="f" checked="checked"> No
+                                <input ng-model="cambio" type="radio" value="t"> Sí
                             </div>
-                            <br/>
-                            <br/>
-                            <div ng-show="userCtrl.cambio">
+
+                            <div ng-show="cambio=='t'">
                                 <label for="inputPassword" class="col-sm-2 col-md-2 control-label"> Password: <br/></label>
                                 <div class="col-sm-10 col-md-2">
-                                    <input id="inputPassword" type="password" class="form-control" name="password"
-                                           ng-model="userCtrl.password" ng-init="userCtrl.password= '${user.password}'" required/><br/>
+                                    <input id="inputPassword" type="password" class="form-control" name="password" placeholder="Password nuevo"
+                                           ng-model="password"/><br/>
                                 </div>
                                 <label for="inputPasswordR" class="col-sm-2 col-md-2 control-label"> Confirmar Password: <br/></label>
                                 <div class="col-sm-10 col-md-2">
-                                    <input id="inputPasswordR" type="password" class="form-control" placeholder="Repita Password" name="passwordR" ng-model="userCtrl.passwordR"
+                                    <input id="inputPasswordR" type="password" class="form-control" placeholder="Repita Password" name="passwordR" ng-model="passwordR"
                                            pass-match="inputPassword">
                                 </div>
                                 <div class="col-md-2">
@@ -89,12 +99,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="inputRol" class="col-sm-2 control-label"> Rol: <br/></label>
-                            <div class="col-sm-10">
-                                <input id="inputRol" type="text" readonly class="form-control" name="rol" value="${user.rol}"/><br/>
-                            </div>
-                        </div>
+
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
                                 <button type="submit" name="form.submitted" class="btn btn-success" ng-disabled="!formEditarUser.$valid">Actualizar</button>
@@ -118,6 +123,6 @@
     <script src="//oss.maxcdn.com/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="//oss.maxcdn.com/libs/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
-    <script src="../../static/angular/usuario.js?00.007"></script>
+    <script src="../../static/angular/usuario.js?00.021"></script>
 </body>
 </html>

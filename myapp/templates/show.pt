@@ -40,7 +40,7 @@
                     <form id="formProd" class="form-horizontal" role="form" >
                         <div class="imagen-producto">
                             <center>
-                                <img src="${request.application_url}/static/img/productos/${producto.img}"  class="img-responsive">
+                                <img src="${request.application_url}/static/img/productos/${producto.img}" class="img-responsive">
                             </center>
                         </div>
                         <div class="datos-producto">

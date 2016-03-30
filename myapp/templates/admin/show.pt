@@ -33,7 +33,7 @@
                         <li role="presentation"><a class="menu-item" href="/user">Usuario</a></li>
                         <li role="presentation"><a class="menu-item" href="/product">Productos</a></li>
                         <li role="presentation"><a class="menu-item" href="/admin-pedidos">Pedidos</a></li>
-                        <li tal:condition="logged_in" role="presentation" >
+                        <li ng-if="'${logged_in}'" role="presentation">
                             <a class="menu-item"  href="${request.application_url}/logout"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Log-out</a>
                         </li>
                     </ul>
@@ -46,7 +46,7 @@
                     <hr/>
                     <div class="imagen-producto">
                         <center>
-                            <img src="${request.static_url('myapp:static/img/lampara.jpg')}" class="img-responsive" alt="Responsive image">
+                            <img src="${request.application_url}/static/img/productos/${producto.img}" class="img-responsive" alt="Responsive image">
                         </center>
                     </div>
 

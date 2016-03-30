@@ -7,6 +7,7 @@ from .models import (
 def groupfinder(userid, request):
     usuario = DBSession.query(Usuario).filter_by(username=userid).one()
     if usuario is None:
-        return None
+        grupo = {'invitado': ['invitado']}
+        return grupo.get('invitado', [])
     grupo = {usuario.username: [usuario.rol]}
     return grupo.get(userid, [])

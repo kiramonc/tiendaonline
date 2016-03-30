@@ -26,12 +26,12 @@ def main(global_config, **settings):
     config.include('pyramid_chameleon')
     config.add_static_view('static', 'static', cache_max_age=3600)
     # add_route es el "nombre_de_la_vista", "url"
-    config.add_route('pag-error', '/error')   # para el inicio de la app
-    config.add_route('error-admin', '/error-admin')   # para el inicio de la app
-    config.add_route('error-client', '/error-client')   # para el inicio de la app
+    config.add_route('pag-error', '/error')
+    config.add_route('error-admin', '/error-admin')
+    config.add_route('error-client', '/error-client')
     config.add_route('login', '/')   # para el inicio de la app
-    config.add_route('home-admin', '/admin')   # para el inicio de la app
-    config.add_route('home-client', '/client')   # para el inicio de la app
+    config.add_route('home-admin', '/admin')
+    config.add_route('home-client', '/client')
     config.add_route('logout', '/logout')
     config.add_route('add', '/add')   # para agregar un nuevo producto
     config.add_route('list', '/product')        # para ver el listado de productos
@@ -46,18 +46,22 @@ def main(global_config, **settings):
 
     config.add_route('productos', '/products')        # para ver el listado de productos
     config.add_route('ver', '/products/{uid}')  # para ver el detalle de un producto
-    config.add_route('pedidos', '/pedidos')        # para ver el listado de productos
-    config.add_route('detalle_pedido', '/pedidos/{uid}/detalle')        # para ver el listado de productos
-    config.add_route('admin_pedidos', '/admin-pedidos')        # para ver el listado de productos
-    config.add_route('detalle_pedido_admin', '/pedidos/{uid}/admin')        # para ver el listado de productos
-    config.add_route('cuenta', '/my-account')        # para ver el listado de productos
-    config.add_route('desactivar', '/desc-account')   # para ver el listado de productos
-    config.add_route('carrito', '/chart')        # para ver el listado de productos
-    config.add_route('list_prod', '/productos')        # para ver el listado de productos
-    config.add_route('ver_prod', '/productos/{uid}')  # para ver el detalle de un producto
+    config.add_route('pedidos', '/pedidos')
+    config.add_route('detalle_pedido', '/pedidos/{uid}/detalle')
+    config.add_route('admin_pedidos', '/admin-pedidos')
+    config.add_route('detalle_pedido_admin', '/pedidos/{uid}/admin')
+    config.add_route('cuenta', '/my-account')
+    config.add_route('desactivar', '/desc-account')
+    config.add_route('carrito', '/chart')
+    config.add_route('list_prod', '/productos')
+    config.add_route('ver_prod', '/productos/{uid}')
 
     config.add_route('generate_ajax_data', '/ajax_view')
     config.add_route('get_data', '/pedido_data/{uid}')
+    config.add_route('data_products', '/products_data')
+    config.add_route('data_product', '/product_data/{uid}')
+    config.add_route('data_users', '/users_data')
+    config.add_route('data_user', '/user_data/{uid}')
 
     config.scan()
     return config.make_wsgi_app()

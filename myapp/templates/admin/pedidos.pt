@@ -33,7 +33,7 @@
                         <li role="presentation"><a class="menu-item" href="/user">Usuario</a></li>
                         <li role="presentation"><a class="menu-item" href="/product">Productos</a></li>
                         <li role="presentation"><a class="menu-item" href="/admin-pedidos">Pedidos</a></li>
-                        <li tal:condition="logged_in" role="presentation" >
+                        <li ng-if="'${logged_in}'" role="presentation">
                             <a class="menu-item"  href="${request.application_url}/logout"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Log-out</a>
                         </li>
                     </ul>

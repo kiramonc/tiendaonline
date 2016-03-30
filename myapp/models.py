@@ -89,8 +89,10 @@ class Prod_Pedido(Base):
 
 
 class RootFactory(object):
-    __acl__ = [ (Allow, Everyone, 'show'),
-                (Allow, 'admins', 'edit') ]
+    __acl__ = [ (Allow, Everyone, 'all'),
+                (Allow, 'admins', 'edit'),
+                (Allow, 'clients', 'shop'),
+                (Allow, 'invitado', 'show')]
 
     def __init__(self, request):
         pass

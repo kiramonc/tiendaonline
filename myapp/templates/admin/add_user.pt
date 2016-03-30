@@ -19,7 +19,7 @@
       <script src="//oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
 </head>
-<body ng-app="adminUsuario">
+<body ng-app="adminUser">
 <div class="wrapper">
     <div class="container">
         <div class="row">
@@ -34,7 +34,7 @@
                         <li role="presentation"><a class="menu-item" href="/user">Usuario</a></li>
                         <li role="presentation"><a class="menu-item" href="/product">Productos</a></li>
                         <li role="presentation"><a class="menu-item" href="/admin-pedidos">Pedidos</a></li>
-                        <li tal:condition="logged_in" role="presentation" >
+                        <li ng-if="'${logged_in}'" role="presentation">
                             <a class="menu-item"  href="${request.application_url}/logout"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Log-out</a>
                         </li>
                     </ul>
@@ -43,44 +43,39 @@
 
             <div id="main">
                 <div class="content col-md-12">
-                    <div class="titulos" ng-controller="usuarioCtrl as userCtrl">
+                    <div class="titulos" ng-controller="userCtrl">
                         <h2><span class="font-semi-bold">Ingrese un usuario</span> <span class="smaller">nuevo</span></h2>
-                        <form name="formCrearUser" class="form-horizontal css-form" role="form" action="${save_form}" ng-submit="userCtrl.submitForm(formData)" method="post" novalidate>
+                        <form name="formCrearUser" class="form-horizontal css-form" role="form" action="${save_form}" method="post" novalidate>
                             <div class="form-group">
                                 <label for="inputNombre" class="col-sm-2 control-label"> Nombre: <br/></label>
                                 <div class="col-sm-10">
-                                    <input id="inputNombre" type="text" class="form-control" placeholder="Nombre" name="nombre" ng-model="userCtrl.formData.nombre" required
-                                     >
+                                    <input id="inputNombre" type="text" class="form-control" placeholder="Nombre" name="nombre" ng-model="formData.nombre" required>
                                     <br/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputApellido" class="col-sm-2 control-label"> Apellido: <br/></label>
                                 <div class="col-sm-10">
-                                    <input id="inputApellido" type="text" class="form-control" placeholder="Apellido" name="apellido" ng-model="userCtrl.formData.apellido" required
-                                    />
+                                    <input id="inputApellido" type="text" class="form-control" placeholder="Apellido" name="apellido" ng-model="formData.apellido" required/>
                                     <br/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputUsername" class="col-sm-2 control-label"> Username: <br/></label>
                                 <div class="col-sm-10">
-                                    <input id="inputUsername" type="text" class="form-control" placeholder="Nombre de usuario" name="username" ng-model="userCtrl.formData.username" required
-                                    >
+                                    <input id="inputUsername" type="text" class="form-control" placeholder="Nombre de usuario" name="username" ng-model="formData.username" required>
                                     <br/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputPassword" class="col-sm-2 col-md-2 control-label"> Password: <br/></label>
                                 <div class="col-sm-10 col-md-2">
-                                    <input id="inputPassword" type="password" class="form-control" placeholder="Password" name="password" ng-model="userCtrl.formData.password" required
-                                    >
+                                    <input id="inputPassword" type="password" class="form-control" placeholder="Password" name="password" ng-model="formData.password" required>
                                     <br/>
                                 </div>
                                 <label for="inputPasswordR" class="col-sm-2 col-md-2 control-label"> Confirmar Password: <br/></label>
                                 <div class="col-sm-10 col-md-2">
-                                    <input id="inputPasswordR" type="password" class="form-control" placeholder="Repita Password" name="passwordR" ng-model="userCtrl.formData.passwordR" required
-                                    pass-match="inputPassword">
+                                    <input id="inputPasswordR" type="password" class="form-control" placeholder="Repita Password" name="passwordR" ng-model="formData.passwordR" pass-match="inputPassword" required>
                                 </div>
                                 <div class="col-md-2" ng-show="formCrearUser.$error">
                                     <span ng-show="formCrearUser.passwordR.$dirty && formCrearUser.passwordR.$error.pwmatch">El password no coincide.</span>
@@ -88,7 +83,6 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-10">
-                                    <input id="inputRol" type="hidden" class="form-control" name="rol" ng-model="userCtrl.formData.rol" value="admins"/><br/>
                                     <button type="submit" name="form.submitted" class="btn btn-success" ng-disabled="!formCrearUser.$valid">Guardar</button>
                                     <a href="/user" class="btn btn-default" role="button">Cancelar</a>
                                 </div>
