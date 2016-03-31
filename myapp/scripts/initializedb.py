@@ -43,9 +43,9 @@ def main(argv=sys.argv):
     DBSession.configure(bind=engine)
     Base.metadata.create_all(engine)
     with transaction.manager:
-        model = Producto(nombre='ejemplo', descripcion="test", inventario=8, precio=12.08, img='ejemplo.png')
-        model1 = Usuario(username='admin', password='admin123', nombre='Katherine', apellido='Ramon', rol='admins')
-        model2 = Usuario(username='cliente', password='cliente', nombre='Katherine', apellido='Ramon', rol='clients')
+        model = Producto(nombre='ejemplo', descripcion="test", inventario=8, precio=12.08, img='ejemplo.jpg', estado=True)
+        model1 = Usuario(username='admin', password='admin', nombre='Katherine', apellido='Ramon', rol='admins', estado=True)
+        model2 = Usuario(username='cliente', password='cliente', nombre='Katherine', apellido='Ramon', rol='clients', estado=True)
         DBSession.add(model)
         DBSession.add(model1)
         DBSession.add(model2)

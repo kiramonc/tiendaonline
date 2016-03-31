@@ -49,7 +49,7 @@ def error(request):
 @view_config(route_name='productos', renderer='templates/client/productos.pt', permission='shop')
 @view_config(route_name='list_prod', renderer='templates/productos.pt', permission='all')
 def list_product(request):
-    data = DBSession.query(Producto).all()
+    data = DBSession.query(Producto).filter_by(estado=True).all()
     return dict(formData=data, logged_in=request.authenticated_userid)
 
 
@@ -58,26 +58,33 @@ def list_product(request):
 @view_config(route_name='ver_prod', renderer='templates/show.pt', permission='all')
 def show_product(request):
     uid = request.matchdict['uid']
-    producto = DBSession.query(Producto).filter_by(nombre=uid).one()
-    if producto is None:
-        return HTTPFound(request.route_url('list'))
+    producto = Producto("", "", 0, 0, "")
+    buscar = DBSession.query(Producto).filter_by(nombre=uid).count()
+    if buscar != 0:
+        producto = DBSession.query(Producto).filter_by(nombre=uid).one()
+    else:
+        return HTTPFound(request.route_url('pag-error'))
     return dict(producto=producto, logged_in=request.authenticated_userid)
 
 
 @view_config(route_name='register', renderer='templates/register.pt', permission='all')
 def register(request):
+    message = ''
     if 'form.submitted' in request.params:
-        nombre = request.params['nombre']
-        apellido = request.params['apellido']
         username = request.params['username']
-        password = request.params['password']
-        user = Usuario(nombre, apellido, username, password,'clients')
-        DBSession.add(user)
-        return HTTPFound(request.route_url('login'))
+        buscar = DBSession.query(Usuario).filter_by(username=username).count()
+        if buscar!=0:
+            message = 'Username no disponible, ingrese otro'
+        else:
+            nombre = request.params['nombre']
+            apellido = request.params['apellido']
+            password = request.params['password']
+            user = Usuario(nombre, apellido, username, password, 'clients', True)
+            DBSession.add(user)
+            return HTTPFound(request.route_url('login'))
 
-    user = Usuario(nombre="", apellido="", username="", password="", rol='invitado')
     save_form = request.route_url('register')
-    return dict(user=user, save_form=save_form, logged_in=request.authenticated_userid)
+    return dict(message=message, save_form=save_form, logged_in=request.authenticated_userid)
 
 
 @view_config(route_name='login', renderer='templates/login.pt', permission='all')
@@ -92,8 +99,9 @@ def login(request):
     if 'form.submitted' in request.params:
         login = request.params['login']
         password = request.params['password']
-        usuario= DBSession.query(Usuario).filter_by(username=login).one()
-        if usuario is not None:
+        buscar = DBSession.query(Usuario).filter_by(username=login, estado=True).count()
+        if buscar != 0:
+            usuario = DBSession.query(Usuario).filter_by(username=login, estado=True).one()
             if usuario.password == password:
                 headers = remember(request, login)
                 if referrer == login_url:
@@ -104,7 +112,7 @@ def login(request):
                         return HTTPFound(request.route_url('home-client'), headers=headers)
 
                 return HTTPFound(location=came_from, headers=headers)
-        message = 'Failed login'
+        message = 'Usuario o password incorrecto'
     return dict(message=message, url=request.route_url('login'), came_from=came_from,
         login = login, password = password)
 

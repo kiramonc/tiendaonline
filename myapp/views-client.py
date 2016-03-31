@@ -1,5 +1,6 @@
 # coding=utf-8
 from pyramid.view import view_config
+import json
 from pyramid.httpexceptions import HTTPFound
 from pyramid.view import (view_config,forbidden_view_config)
 from pyramid.security import (remember,forget,)
@@ -21,9 +22,9 @@ def my_ajax_view(request):
     client = DBSession.query(Usuario).filter_by(username=request.authenticated_userid).one()
 
     dt = datetime.now()
-    pedido = Pedido(client.id, dt, "En espera")
+    pedido = Pedido(client.id, dt, 0, None)
     DBSession.add(pedido)
-    pedido = DBSession.query(Pedido).filter_by(cliente_id=client.id, fecha=dt).one()
+    pedido = DBSession.query(Pedido).filter_by(cliente_id=client.id, fecha_pedido=dt).one()
     cont=0
     for nombre in nombres:
         producto = DBSession.query(Producto).filter_by(nombre=nombre).one()
@@ -35,6 +36,7 @@ def my_ajax_view(request):
 
 @view_config(route_name='cuenta', renderer='templates/client/cuenta.pt', permission='shop')
 def cuenta(request):
+    message=''
     username = request.authenticated_userid
     user = DBSession.query(Usuario).filter_by(username=username).one()
     if 'form.submitted' in request.params:
@@ -46,11 +48,11 @@ def cuenta(request):
 
         user.rol = request.params['rol']
         DBSession.add(user)
-        return HTTPFound(request.route_url('cuenta'))
+        message='Datos actualizados'
     elif 'form.delete' in request.params:
         return HTTPFound(request.route_url('desactivar'))
 
-    return dict(user=user, save_form=request.route_url('cuenta'),
+    return dict(message=message, user=user, save_form=request.route_url('cuenta'),
                 logged_in=request.authenticated_userid)
 
 
@@ -62,7 +64,8 @@ def desactivar(request):
         return HTTPFound(request.route_url('home-client'))
     if 'form.confirmDelete' in request.params:
         headers = forget(request)
-        DBSession.delete(user)
+        user.estado = False
+        DBSession.add(user)
         return HTTPFound(location=request.route_url('login'), headers=headers)
     elif 'form.cancelar' in request.params:
         return HTTPFound(request.route_url('cuenta'))
@@ -98,11 +101,25 @@ def detalle_pedido(request):
 @view_config(route_name='get_data', renderer="json")
 def get_data(request):
     uid = request.matchdict['uid']
-    pedido = DBSession.query(Pedido).filter_by(id=uid).one()
-    cliente = {"nombre":pedido.cliente.nombre, "apellido":pedido.cliente.apellido, "username":pedido.cliente.username}
-    data = DBSession.query(Prod_Pedido).filter_by(pedido_id=pedido.id).all()
+    p= DBSession.query(Pedido).filter_by(id=uid).one()
+    f = p.fecha_atencion if (p.fecha_atencion is None) else p.fecha_atencion.isoformat()
+    pedido = {"uid": uid, "fecha_pedido": p.fecha_pedido.isoformat(),
+              "fecha_atencion":f, "estado": p.estado}
+    cliente = {"nombre":p.cliente.nombre, "apellido":p.cliente.apellido, "username":p.cliente.username, "estado":p.cliente.estado}
+    data = DBSession.query(Prod_Pedido).filter_by(pedido_id=p.id).all()
     productos = []
-    fecha = pedido.fecha.strftime("%d-%m-%Y %H:%M")
     for prod in data:
         productos.append({"nombre":prod.producto.nombre, "unidades":prod.unidades, "precio":prod.producto.precio})
-    return {"productos": productos, "fecha": fecha, "uid": uid, "cliente": cliente}
+    return {"productos": productos, "pedido": pedido, "cliente": cliente}
+
+
+@view_config(route_name='get_pedidos', renderer="json")
+def get_pedidos(request):
+    client = DBSession.query(Usuario).filter_by(username=request.authenticated_userid).one()
+    data = DBSession.query(Pedido).filter_by(cliente_id=client.id).all()
+    pedidos = []
+    for p in data:
+        f = p.fecha_atencion if (p.fecha_atencion is None) else p.fecha_atencion.isoformat()
+        pedidos.append({"id": p.id, "fecha_pedido": p.fecha_pedido.isoformat(),
+                        "fecha_atencion":f,"estado": p.estado})
+    return {"pedidos": pedidos}

@@ -2,6 +2,7 @@ angular
     .module("adminProducto", [])
     .controller("productoCtrl", function($scope, $http){
         $scope.producto={};
+        $scope.formData={};
         if(document.getElementById("url")){
             $scope.url = "/product_data/"+document.getElementById("url").value;
             $http.get($scope.url).then(function (response) {
@@ -37,7 +38,7 @@ angular
             scope.predicate = por;
         }
         scope.ver = function(indice){
-            var url='/product/'+scope.productos[indice].nombre;
+            var url='/product/'+indice;
             location=url;
         }
     })

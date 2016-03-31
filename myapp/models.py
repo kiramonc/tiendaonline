@@ -8,6 +8,7 @@ from sqlalchemy import (
     Float,
     DateTime,
     ForeignKey,
+    Boolean,
 )
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
@@ -32,13 +33,15 @@ class Producto(Base):
     inventario = Column(Integer)
     precio = Column(Float)
     img = Column(String(255))
+    estado = Column(Boolean)
 
-    def __init__(self, nombre, descripcion, inventario, precio, img):
+    def __init__(self, nombre, descripcion, inventario, precio, img, estado):
         self.nombre = nombre
         self.descripcion = descripcion
         self.inventario = inventario
         self.precio = precio
         self.img = img
+        self.estado = estado
 
 
 class Usuario(Base):
@@ -50,28 +53,32 @@ class Usuario(Base):
     apellido = Column(String(255))
     rol = Column(String(255))
     pedidos = relationship("Pedido")
+    estado = Column(Boolean)
 
-    def __init__(self, nombre, apellido, username, password, rol):
+    def __init__(self, nombre, apellido, username, password, rol, estado):
         self.username = username
         self.password = password
         self.nombre = nombre
         self.apellido = apellido
         self.rol = rol
+        self.estado = estado
 
 
 class Pedido(Base):
     __tablename__ = 'pedido'
     id = Column(Integer, Sequence('pedido_seq'), primary_key=True)
     cliente_id = Column(Integer, ForeignKey('usuario.id'))
-    fecha = Column(DateTime)
-    estado = Column(String(255))
+    fecha_pedido = Column(DateTime)
+    fecha_atencion = Column(DateTime)
+    estado = Column(Integer)
     productos = relationship("Prod_Pedido")
     cliente = relationship("Usuario")
 
-    def __init__(self, cliente_id, fecha, estado):
+    def __init__(self, cliente_id, fecha_pedido, estado, fecha_atencion):
         self.cliente_id = cliente_id
-        self.fecha = fecha
+        self.fecha_pedido = fecha_pedido
         self.estado = estado
+        self.fecha_atencion = fecha_atencion
 
 
 class Prod_Pedido(Base):
